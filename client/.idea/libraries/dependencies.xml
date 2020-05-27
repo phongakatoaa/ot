@@ -6,6 +6,7 @@
     <JAVADOC />
     <SOURCES>
       <root url="file://$PROJECT_DIR$/dependencies" />
+      <root url="jar://$PROJECT_DIR$/dependencies/xmleditorkit.jar!/src" />
     </SOURCES>
     <jarDirectory url="file://$PROJECT_DIR$/dependencies" recursive="false" />
     <jarDirectory url="file://$PROJECT_DIR$/dependencies" recursive="false" type="SOURCES" />
