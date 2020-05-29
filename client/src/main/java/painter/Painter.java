@@ -1,4 +1,7 @@
 package painter;
 
-public class Painter {
+import java.awt.*;
+
+public abstract class Painter {
+    public abstract void paint(Graphics graphics);
 }

@@ -11,7 +11,7 @@ public class Canvas extends JPanel {
         JTextField textField = new JTextField();
         textField.setEditable(false);
         textField.setText("abc");
-        textField.setBounds(100 + (160 - 120) / 2, 110, 120, 40);
+        textField.setBounds(100 + (160 - 120) / 2, 122, 120, 16);
         textField.setBorder(null);
         //textField.setBackground(null);
         textField.addFocusListener(new FocusAdapter() {
@@ -40,7 +40,7 @@ public class Canvas extends JPanel {
             }
         });
 
-        //this.add(textField);
+        this.add(textField);
     }
 
     private void drawDiagram(Graphics g) {
