@@ -50,8 +50,6 @@ public class UMLPainterFactory {
     }
 
     private UMLClassPainter getClassPainter(Element element) {
-        UMLClassPainter painter = new UMLClassPainter();
-        painter.setUmlClass((UMLClass) element);
-        return painter;
+        return new UMLClassPainter((UMLClass) element);
     }
 }

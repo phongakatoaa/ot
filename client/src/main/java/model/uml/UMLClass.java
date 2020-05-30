@@ -5,37 +5,62 @@ import model.Element;
 import java.util.ArrayList;
 
 public class UMLClass extends Element {
-    private String name;
-    private ArrayList<String> attributes;
-    private ArrayList<String> operations;
+    private final UMLClassName name;
+    private final ArrayList<UMLAttribute> attributes;
+    private final ArrayList<UMLOperation> operations;
     private int x;
     private int y;
 
     public UMLClass(String name) {
-        this.name = name;
+        this.name = new UMLClassName(name);
+        this.attributes = new ArrayList<>();
+        this.operations = new ArrayList<>();
+        this.x = 0;
+        this.y = 0;
     }
 
-    public String getName() {
+    public UMLClassName getName() {
         return name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name.setValue(name);
     }
 
-    public ArrayList<String> getAttributes() {
+    public ArrayList<UMLAttribute> getAttributes() {
         return attributes;
     }
 
-    public void setAttributes(ArrayList<String> attributes) {
-        this.attributes = attributes;
-    }
-
-    public ArrayList<String> getOperations() {
+    public ArrayList<UMLOperation> getOperations() {
         return operations;
     }
 
-    public void setOperations(ArrayList<String> operations) {
-        this.operations = operations;
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public void setPosition(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public void addAttribute(UMLAttribute attribute) {
+        this.attributes.add(attribute);
+    }
+
+    public void addOperation(UMLOperation operation) {
+        this.operations.add(operation);
     }
 }

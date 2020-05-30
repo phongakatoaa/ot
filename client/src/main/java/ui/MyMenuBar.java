@@ -5,18 +5,18 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.IOException;
 
 public class MyMenuBar extends JMenuBar {
-    private JMenu menuFile;
-    private JMenu menuView;
-    private JMenu subMenuOpen;
+    private final JMenu menuFile;
+    private final JMenu menuView;
+    private final JMenu subMenuOpen;
 
-    private JMenuItem menuItemAbout;
-    private JMenuItem menuItemOpenFromDisk;
-    private JMenuItem menuItemOpenFromServer;
-    private JMenuItem menuItemSave;
-    private JMenuItem menuItemClose;
-    private JMenuItem menuItemNew;
+    private final JMenuItem menuItemAbout;
+    private final JMenuItem menuItemOpenFromDisk;
+    private final JMenuItem menuItemOpenFromServer;
+    private final JMenuItem menuItemSave;
+    private final JMenuItem menuItemClose;
+    private final JMenuItem menuItemNew;
 
-    private JFileChooser fileChooser;
+    private final JFileChooser fileChooser;
 
     private XMLViewer xmlViewer;
     private JFrame frame;

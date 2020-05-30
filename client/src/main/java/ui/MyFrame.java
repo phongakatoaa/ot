@@ -1,11 +1,17 @@
 package ui;
 
+import model.uml.UMLDiagram;
+
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
 
 public class MyFrame extends JFrame {
     private static final String APP_TITLE = "UML Collaborative Editor";
+    private final MyMenuBar menuBar;
+    private final MyToolbar toolbar;
+    private final XMLViewer xmlViewer;
+    private final MyCanvas myCanvas;
+    private final Chat chat;
 
     public MyFrame() {
         super(APP_TITLE);
@@ -13,21 +19,41 @@ public class MyFrame extends JFrame {
         this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         this.setLayout(new BorderLayout());
 
-        MyMenuBar menubar = new MyMenuBar();
-        MyToolbar toolBar = new MyToolbar();
-        XMLViewer xmlViewer = new XMLViewer();
-        Canvas canvas = new Canvas();
+        menuBar = new MyMenuBar();
+        toolbar = new MyToolbar();
+        xmlViewer = new XMLViewer();
+        myCanvas = new MyCanvas();
+        chat = new Chat();
+
+        myCanvas.setDiagram(new UMLDiagram("example"));
+
         JSplitPane splitPane = new JSplitPane();
-        Chat chat = new Chat();
+        JSplitPane subSplitPane = new JSplitPane();
 
-        menubar.setFrame(this);
-        menubar.setXmlViewer(xmlViewer);
+        menuBar.setFrame(this);
+        menuBar.setXmlViewer(xmlViewer);
         splitPane.setLeftComponent(new JScrollPane(xmlViewer));
-        splitPane.setRightComponent(canvas);
+        splitPane.setRightComponent(myCanvas);
 
-        this.setJMenuBar(menubar);
-        this.add(toolBar, BorderLayout.PAGE_START);
+        this.setJMenuBar(menuBar);
+        this.add(toolbar, BorderLayout.PAGE_START);
         this.add(splitPane, BorderLayout.CENTER);
         this.add(chat, BorderLayout.LINE_END);
+    }
+
+    public MyToolbar getToolbar() {
+        return toolbar;
+    }
+
+    public XMLViewer getXmlViewer() {
+        return xmlViewer;
+    }
+
+    public MyCanvas getMyCanvas() {
+        return myCanvas;
+    }
+
+    public Chat getChat() {
+        return chat;
     }
 }

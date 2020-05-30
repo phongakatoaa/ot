@@ -3,17 +3,17 @@ package ui;
 import javax.swing.*;
 
 public class MyToolbar extends JToolBar {
-    private JButton buttonNewClass;
-    private JButton buttonNewAttribute;
-    private JButton buttonNewOperation;
-    private JButton buttonUndo;
-    private JButton buttonRedo;
-    private JButton buttonNewDependency;
-    private JButton buttonNewGeneralization;
-    private JButton buttonNewAssociation;
-    private JButton buttonNewMultiplicity;
-    private JButton buttonNewAggregation;
-    private JButton buttonNewComposition;
+    private final JButton buttonNewClass;
+    private final JButton buttonNewAttribute;
+    private final JButton buttonNewOperation;
+    private final JButton buttonUndo;
+    private final JButton buttonRedo;
+    private final JButton buttonNewDependency;
+    private final JButton buttonNewGeneralization;
+    private final JButton buttonNewAssociation;
+    private final JButton buttonNewMultiplicity;
+    private final JButton buttonNewAggregation;
+    private final JButton buttonNewComposition;
 
     public MyToolbar() {
         super();

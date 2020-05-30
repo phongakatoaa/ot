@@ -9,8 +9,13 @@ public class UMLRealizationPainter extends Painter {
     private UMLRealization umlRealization;
 
     @Override
-    public void paint(Graphics graphics) {
+    public void paint(Graphics2D graphics2D) {
 
+    }
+
+    @Override
+    public boolean intersectMouse(int x, int y) {
+        return false;
     }
 
     public UMLRealization getUmlRealization() {

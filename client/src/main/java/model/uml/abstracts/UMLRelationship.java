@@ -4,27 +4,27 @@ import model.Element;
 import model.uml.UMLClass;
 
 public abstract class UMLRelationship extends Element {
-    private UMLClass first;
-    private UMLClass second;
+    private UMLClass src;
+    private UMLClass desc;
 
-    public UMLRelationship(UMLClass first, UMLClass second) {
-        this.first = first;
-        this.second = second;
+    public UMLRelationship(UMLClass src, UMLClass desc) {
+        this.src = src;
+        this.desc = desc;
     }
 
-    public UMLClass getFirst() {
-        return first;
+    public UMLClass getSrc() {
+        return src;
     }
 
-    public void setFirst(UMLClass first) {
-        this.first = first;
+    public void setSrc(UMLClass src) {
+        this.src = src;
     }
 
-    public UMLClass getSecond() {
-        return second;
+    public UMLClass getDesc() {
+        return desc;
     }
 
-    public void setSecond(UMLClass second) {
-        this.second = second;
+    public void setDesc(UMLClass desc) {
+        this.desc = desc;
     }
 }

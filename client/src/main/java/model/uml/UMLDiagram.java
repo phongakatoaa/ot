@@ -5,12 +5,14 @@ import model.uml.abstracts.UMLRelationship;
 import java.util.ArrayList;
 
 public class UMLDiagram {
-    private ArrayList<UMLClass> umlClasses;
-    private ArrayList<UMLRelationship> umlRelationships;
+    private final ArrayList<UMLClass> umlClasses;
+    private final ArrayList<UMLRelationship> umlRelationships;
     private String name;
 
     public UMLDiagram(String name) {
         this.name = name;
+        this.umlClasses = new ArrayList<>();
+        this.umlRelationships = new ArrayList<>();
     }
 
     public String getName() {
