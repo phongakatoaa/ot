@@ -20,7 +20,7 @@ public class DiagramTextField extends JTextField {
     private void bind() {
         this.setFont(Constants.DEFAULT_FONT);
         this.setOpaque(false);
-        this.setEditable(false);
+        //this.setEditable(false);
         this.setBorder(null);
         this.setBackground(null);
 
