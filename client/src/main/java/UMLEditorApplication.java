@@ -1,28 +1,51 @@
-import model.uml.UMLClass;
-import model.uml.UMLGeneralization;
-import model.uml.UMLRealization;
-import painter.PainterFactoryException;
-import painter.uml.UMLPainterFactory;
+import model.uml.*;
+import painter.uml.UMLAssociationPainter;
+import painter.uml.UMLClassPainter;
+import painter.uml.UMLRealizationPainter;
 import ui.MyFrame;
-
-import javax.swing.*;
-import java.io.IOException;
 
 public class UMLEditorApplication {
     public static void main(String[] args) {
-        JFrame frame = new MyFrame();
+        MyFrame frame = new MyFrame();
+
+        UMLDiagram diagram = new UMLDiagram("example");
+        UMLClass umlClass = new UMLClass("Person");
+        umlClass.setPosition(100, 100);
+        umlClass.addAttribute(new UMLAttribute("name"));
+        umlClass.addAttribute(new UMLAttribute("age"));
+        umlClass.addOperation(new UMLOperation("setName()"));
+        umlClass.addOperation(new UMLOperation("setAge()"));
+        umlClass.addOperation(new UMLOperation("getName()"));
+        umlClass.addOperation(new UMLOperation("getAge()"));
+        umlClass.addOperation(new UMLOperation("toString()"));
+
+        UMLClass umlClass1 = new UMLClass("Car");
+        umlClass1.setPosition(500, 500);
+        umlClass1.addAttribute(new UMLAttribute("brand"));
+        umlClass1.addAttribute(new UMLAttribute("model"));
+        umlClass1.addAttribute(new UMLAttribute("numberOfSeats"));
+        umlClass1.addOperation(new UMLOperation("toString()"));
+
+        diagram.addUMLClass(umlClass);
+        diagram.addUMLClass(umlClass1);
+
+        UMLClassPainter painter = new UMLClassPainter(umlClass);
+        umlClass.setPainter(painter);
+
+        UMLClassPainter painter1 = new UMLClassPainter(umlClass1);
+        umlClass1.setPainter(painter1);
+
+//        UMLAssociation umlAssociation = new UMLAssociation(umlClass, umlClass1);
+//        UMLAssociationPainter painter2 = new UMLAssociationPainter(umlAssociation);
+//        umlAssociation.setPainter(painter2);
+//        diagram.addRelationship(umlAssociation);
+
+        UMLRealization umlRealization = new UMLRealization(umlClass, umlClass1);
+        UMLRealizationPainter painter3 = new UMLRealizationPainter(umlRealization);
+        umlRealization.setPainter(painter3);
+        diagram.addRelationship(umlRealization);
+
+        frame.getMyCanvas().setDiagram(diagram);
         frame.setVisible(true);
-//        UMLClass umlClass = new UMLClass("Person");
-//        UMLClass umlClass1 = new UMLClass("Car");
-//        UMLRealization umlRealization = new UMLRealization(umlClass, umlClass1);
-//        System.out.println(umlClass.getClass().getSimpleName());
-//        System.out.println(umlRealization.getClass().getSimpleName());
-//
-//        UMLPainterFactory factory = new UMLPainterFactory();
-//        try {
-//            System.out.println(factory.getPainter(umlRealization).getClass().getSimpleName());
-//        } catch (PainterFactoryException ignored) {
-//
-//        }
     }
 }

@@ -32,21 +32,15 @@ public class UMLPainterFactory {
     }
 
     private UMLAssociationPainter getAssociationPainter(Element element) {
-        UMLAssociationPainter painter = new UMLAssociationPainter();
-        painter.setUmlAssociation((UMLAssociation) element);
-        return painter;
+        return new UMLAssociationPainter((UMLAssociation) element);
     }
 
     private UMLGeneralizationPainter getGeneralizationPainter(Element element) {
-        UMLGeneralizationPainter painter = new UMLGeneralizationPainter();
-        painter.setUmlGeneralization((UMLGeneralization) element);
-        return painter;
+        return new UMLGeneralizationPainter((UMLGeneralization) element);
     }
 
     private UMLRealizationPainter getRealizationPainter(Element element) {
-        UMLRealizationPainter painter = new UMLRealizationPainter();
-        painter.setUmlRealization((UMLRealization) element);
-        return painter;
+        return new UMLRealizationPainter((UMLRealization) element);
     }
 
     private UMLClassPainter getClassPainter(Element element) {

@@ -18,9 +18,11 @@ public class DiagramTextField extends JTextField {
     }
 
     private void bind() {
+        this.setFont(Constants.DEFAULT_FONT);
+        this.setOpaque(false);
         this.setEditable(false);
         this.setBorder(null);
-        this.setBackground(Constants.DEFAULT_BACKGROUND_COLOR);
+        this.setBackground(null);
         this.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -45,10 +47,7 @@ public class DiagramTextField extends JTextField {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    DiagramTextField textField = (DiagramTextField) e.getComponent();
-                    textField.setEditable(false);
-                    textField.transferFocus();
-                    textField.onValueChange(textField.getText());
+                    e.getComponent().transferFocus();
                 }
             }
         });
@@ -57,11 +56,6 @@ public class DiagramTextField extends JTextField {
             @Override
             public void mouseEntered(MouseEvent e) {
                 setCursor(new Cursor(Cursor.TEXT_CURSOR));
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                super.mouseExited(e);
             }
         });
     }

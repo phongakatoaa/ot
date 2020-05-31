@@ -39,12 +39,14 @@ public class UMLClassPainter extends Painter {
         final int classHeight = rowNum * rowHeight;
         classRectangle.setBounds(classX, classY, classWidth, classHeight);
         if (isFocused()) {
-            graphics2D.setColor(Constants.FOCUSED_BORDER_COLOR);
+            //graphics2D.setColor(Constants.FOCUSED_BORDER_COLOR);
+            graphics2D.setStroke(Constants.THICK_STROKE);
         } else if (isHovered()) {
-            graphics2D.setColor(Constants.HOVERED_BORDER_COLOR);
+            graphics2D.setStroke(Constants.MEDIUM_STROKE);
         }
         graphics2D.draw(classRectangle);
-        graphics2D.setColor(Constants.DEFAULT_BORDER_COLOR);
+        graphics2D.setStroke(Constants.THIN_STROKE);
+        //graphics2D.setColor(Constants.DEFAULT_BORDER_COLOR);
 
         final int textFieldX = classX + Constants.DEFAULT_HORIZONTAL_PADDING;
         final int textFieldWidth = classWidth - Constants.DEFAULT_HORIZONTAL_PADDING * 2;
@@ -90,7 +92,7 @@ public class UMLClassPainter extends Painter {
     }
 
     public void bindTextFields(MyCanvas myCanvas) {
-        myCanvas.add(classNameTextField);
+        myCanvas.add(this.classNameTextField);
         this.attributeTextFields.forEach(myCanvas::add);
         this.operationTextFields.forEach(myCanvas::add);
     }
