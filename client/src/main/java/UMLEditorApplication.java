@@ -1,12 +1,8 @@
-import model.uml.*;
-import painter.uml.UMLAssociationPainter;
-import painter.uml.UMLClassPainter;
-import painter.uml.UMLRealizationPainter;
+import model.uml.UMLDiagram;
 import parser.MyXMLParserException;
 import parser.UMLParser;
 import ui.MyFrame;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 

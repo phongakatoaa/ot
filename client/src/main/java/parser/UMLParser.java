@@ -29,7 +29,7 @@ public class UMLParser extends XMLParser {
 
             List<Element> classElements = rootElement.getChild("classes").getChildren("class");
             for (Element c : classElements) {
-                diagram.addUMLClass(this.parseClass(c));
+                diagram.addClass(this.parseClass(c));
             }
 
             List<Element> relationshipElements = rootElement.getChild("relationships").getChildren("relationship");

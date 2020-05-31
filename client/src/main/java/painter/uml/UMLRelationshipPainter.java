@@ -73,7 +73,7 @@ public abstract class UMLRelationshipPainter extends Painter {
             if (dX > 0 && dY > 0) {
                 if (degree <= 30) {
                     dx1 = srcRect.getX();
-                    dy1 = srcRect.getY() + srcRect.getWidth() / 2;
+                    dy1 = srcRect.getY() + srcRect.getHeight() / 2;
                     dx2 = descRect.getX() + descRect.getWidth();
                     dy2 = descRect.getY() + descRect.getHeight() / 2;
                     rotateDegree = 90;
@@ -93,7 +93,7 @@ public abstract class UMLRelationshipPainter extends Painter {
             } else if (dX < 0 && dY > 0) {
                 if (degree <= 30) {
                     dx1 = srcRect.getX() + srcRect.getWidth();
-                    dy1 = srcRect.getY() + srcRect.getWidth() / 2;
+                    dy1 = srcRect.getY() + srcRect.getHeight() / 2;
                     dx2 = descRect.getX();
                     dy2 = descRect.getY() + descRect.getHeight() / 2;
                     rotateDegree = -90;
@@ -113,7 +113,7 @@ public abstract class UMLRelationshipPainter extends Painter {
             } else if (dX < 0 && dY < 0) {
                 if (degree <= 30) {
                     dx1 = srcRect.getX() + srcRect.getWidth();
-                    dy1 = srcRect.getY() + srcRect.getWidth() / 2;
+                    dy1 = srcRect.getY() + srcRect.getHeight() / 2;
                     dx2 = descRect.getX();
                     dy2 = descRect.getY() + descRect.getHeight() / 2;
                     rotateDegree = -90;
@@ -133,7 +133,7 @@ public abstract class UMLRelationshipPainter extends Painter {
             } else if (dX > 0 && dY < 0) {
                 if (degree <= 30) {
                     dx1 = srcRect.getX();
-                    dy1 = srcRect.getY() + srcRect.getWidth() / 2;
+                    dy1 = srcRect.getY() + srcRect.getHeight() / 2;
                     dx2 = descRect.getX() + descRect.getWidth();
                     dy2 = descRect.getY() + descRect.getHeight() / 2;
                     rotateDegree = 90;

@@ -31,11 +31,20 @@ public class UMLDiagram {
         return umlRelationships;
     }
 
-    public void addUMLClass(UMLClass umlClass) {
+    public void addClass(UMLClass umlClass) {
         this.umlClasses.add(umlClass);
+    }
+
+    public void removeClass(UMLClass umlClass) {
+        this.umlRelationships.removeIf(r -> r.getSrc().equals(umlClass) || r.getDesc().equals(umlClass));
+        this.umlClasses.remove(umlClass);
     }
 
     public void addRelationship(UMLRelationship umlRelationship) {
         this.umlRelationships.add(umlRelationship);
+    }
+
+    public void removeRelationship(UMLRelationship umlRelationship) {
+        this.umlRelationships.remove(umlRelationship);
     }
 }

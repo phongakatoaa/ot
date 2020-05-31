@@ -19,9 +19,9 @@ public class MyFrame extends JFrame {
         this.setLayout(new BorderLayout());
 
         menuBar = new MyMenuBar();
-        toolbar = new MyToolbar();
         xmlViewer = new XMLViewer();
         myCanvas = new MyCanvas();
+        toolbar = new MyToolbar(myCanvas);
         chat = new Chat();
         xmlViewerScrollPane = new JScrollPane(xmlViewer);
 

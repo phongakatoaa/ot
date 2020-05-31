@@ -23,23 +23,16 @@ public class DiagramTextField extends JTextField {
         this.setEditable(false);
         this.setBorder(null);
         this.setBackground(null);
+
         this.addFocusListener(new FocusAdapter() {
             @Override
-            public void focusGained(FocusEvent e) {
-                DiagramTextField textField = (DiagramTextField) e.getComponent();
-                textField.setEditable(true);
-                textField.getCaret().setVisible(true);
-                textField.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Constants.DEFAULT_BORDER_COLOR));
-                textField.selectAll();
+            public void focusLost(FocusEvent e) {
+                update(false);
             }
 
             @Override
-            public void focusLost(FocusEvent e) {
-                DiagramTextField textField = (DiagramTextField) e.getComponent();
-                textField.setEditable(false);
-                textField.setBorder(null);
-                textField.setBackground(Constants.DEFAULT_BACKGROUND_COLOR);
-                textField.onValueChange(textField.getText());
+            public void focusGained(FocusEvent e) {
+                update(true);
             }
         });
 
@@ -47,7 +40,9 @@ public class DiagramTextField extends JTextField {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    e.getComponent().transferFocus();
+                    update(false);
+                } else if(e.getKeyCode() == KeyEvent.VK_TAB) {
+                    transferFocus();
                 }
             }
         });
@@ -57,12 +52,29 @@ public class DiagramTextField extends JTextField {
             public void mouseEntered(MouseEvent e) {
                 setCursor(new Cursor(Cursor.TEXT_CURSOR));
             }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                requestFocus();
+                update(true);
+            }
         });
     }
 
-    private void onValueChange(String newValue) {
-        if (!newValue.equals(this.element.getValue())) {
-            this.element.setValue(newValue);
+    private void update(boolean focus) {
+        this.getCaret().setVisible(focus);
+        if (focus) {
+            this.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Constants.DEFAULT_BORDER_COLOR));
+            this.selectAll();
+        } else {
+            this.setBorder(null);
+            //this.setBackground(Constants.DEFAULT_BACKGROUND_COLOR);
+            this.select(0, 0);
+            String newValue = this.getText();
+            if (!newValue.equals(this.element.getValue())) {
+                System.out.println("new value: " + newValue);
+                this.element.setValue(newValue);
+            }
         }
     }
 }

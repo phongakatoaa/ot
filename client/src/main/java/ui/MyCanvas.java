@@ -1,8 +1,13 @@
 package ui;
 
+import model.uml.UMLClass;
 import model.uml.UMLDiagram;
+import model.uml.UMLRelationshipType;
+import model.uml.abstracts.UMLRelationship;
 import painter.Painter;
 import painter.uml.UMLClassPainter;
+import painter.uml.UMLPainterFactory;
+import painter.uml.UMLRelationshipPainter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,15 +17,18 @@ import java.util.ArrayList;
 public class MyCanvas extends JPanel implements MouseMotionListener, MouseListener {
     private final ArrayList<Painter> painters;
     private final TranslateControl translateControl;
+    private final ArrayList<Shape> customShapes;
     private int mouseX, mouseY;
 
     private UMLDiagram diagram;
     private Painter focusedPainter;
+    private boolean drawConnectLine;
 
     public MyCanvas() {
         super();
         this.setLayout(null);
         this.painters = new ArrayList<>();
+        this.customShapes = new ArrayList<>();
         this.translateControl = new TranslateControl();
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
@@ -36,6 +44,11 @@ public class MyCanvas extends JPanel implements MouseMotionListener, MouseListen
 
     public void setDiagram(UMLDiagram diagram) {
         this.diagram = diagram;
+        this.bindDiagram();
+    }
+
+    public void bindDiagram() {
+        this.removeAll();
         this.painters.clear();
         this.diagram.getUmlClasses().forEach(c -> {
             ((UMLClassPainter) c.getPainter()).bindTextFields(this);
@@ -49,12 +62,21 @@ public class MyCanvas extends JPanel implements MouseMotionListener, MouseListen
         this.painters.forEach(p -> p.paint(graphics2D));
     }
 
+    public void addCustomShape(Shape shape) {
+        this.customShapes.add(shape);
+    }
+
+    public void removeCustomShape(Shape shape) {
+        this.customShapes.remove(shape);
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (this.diagram != null) {
             this.drawDiagram(g);
         }
+        this.customShapes.forEach(((Graphics2D) g)::draw);
     }
 
     @Override
@@ -66,12 +88,14 @@ public class MyCanvas extends JPanel implements MouseMotionListener, MouseListen
             for (Painter painter : this.painters) {
                 if (painter.intersectMouse(e.getX(), e.getY())) {
                     menuItem.setText("Delete");
+                    menuItem.addActionListener(e1 -> onClickDeleteElement(painter));
                     intersect = true;
                     break;
                 }
             }
             if (!intersect) {
                 menuItem.setText("New Class");
+                menuItem.addActionListener(e1 -> onClickAddClass(e.getX(), e.getY()));
             }
             popupMenu.add(menuItem);
             popupMenu.show(e.getComponent(), e.getX(), e.getY());
@@ -126,5 +150,57 @@ public class MyCanvas extends JPanel implements MouseMotionListener, MouseListen
             painter.setHovered(painter.intersectMouse(e.getX(), e.getY()));
         }
         this.repaint();
+    }
+
+    public void onClickAddClass(int x, int y) {
+        String errorMessage = null;
+        if (this.diagram == null) {
+            errorMessage = "Please create/open a diagram first";
+        } else {
+            String value = JOptionPane.showInputDialog(this, "Enter new class name").trim();
+            if (value.length() == 0) {
+                errorMessage = "Class name cannot be empty";
+            } else {
+                UMLClass umlClass = new UMLClass(value);
+                umlClass.setPosition(x, y);
+                UMLPainterFactory painterFactory = new UMLPainterFactory();
+                UMLClassPainter painter = (UMLClassPainter) painterFactory.createPainter(umlClass);
+                this.diagram.addClass(umlClass);
+                this.bindDiagram();
+                this.repaint();
+            }
+        }
+        if (errorMessage != null) {
+            JOptionPane.showMessageDialog(this, errorMessage, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void onClickDeleteElement(Painter painter) {
+        String confirmMessage = null;
+        int confirm = JOptionPane.showConfirmDialog(null, "Are you sure?");
+        if (confirm == JOptionPane.YES_OPTION) {
+            if (painter instanceof UMLClassPainter) {
+                UMLClass umlClass = ((UMLClassPainter) painter).getUmlClass();
+                this.diagram.removeClass(umlClass);
+            } else if (painter instanceof UMLRelationshipPainter) {
+                UMLRelationship umlRelationship = ((UMLRelationshipPainter) painter).getUmlRelationship();
+                this.diagram.removeRelationship(umlRelationship);
+            }
+            this.bindDiagram();
+            this.repaint();
+        }
+    }
+
+    public void onClickCreateRelationship(UMLRelationshipType type) {
+        this.removeMouseListener(this);
+        this.removeMouseMotionListener(this);
+        CreateRelationshipMouseListener l = new CreateRelationshipMouseListener(this, type);
+        this.addMouseListener(l);
+        this.addMouseMotionListener(l);
+    }
+
+    public void resetMouseListener() {
+        this.addMouseListener(this);
+        this.addMouseMotionListener(this);
     }
 }

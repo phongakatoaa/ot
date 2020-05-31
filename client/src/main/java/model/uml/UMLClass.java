@@ -69,7 +69,15 @@ public class UMLClass extends MyElement {
         this.attributes.add(attribute);
     }
 
+    public void removeAttribute(UMLAttribute attribute) {
+        this.attributes.remove(attribute);
+    }
+
     public void addOperation(UMLOperation operation) {
         this.operations.add(operation);
+    }
+
+    public void removeOperation(UMLOperation operation) {
+        this.operations.remove(operation);
     }
 }
