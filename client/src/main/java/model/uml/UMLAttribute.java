@@ -1,8 +1,8 @@
 package model.uml;
 
-import model.EditableElement;
+import model.MyEditableElement;
 
-public class UMLAttribute extends EditableElement {
+public class UMLAttribute extends MyEditableElement {
     public UMLAttribute() {
         super();
     }

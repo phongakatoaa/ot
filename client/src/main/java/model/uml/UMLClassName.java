@@ -1,8 +1,8 @@
 package model.uml;
 
-import model.EditableElement;
+import model.MyEditableElement;
 
-public class UMLClassName extends EditableElement {
+public class UMLClassName extends MyEditableElement {
     public UMLClassName() {
     }
 

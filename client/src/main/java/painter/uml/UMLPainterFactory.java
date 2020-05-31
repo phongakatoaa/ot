@@ -1,49 +1,32 @@
 package painter.uml;
 
-import model.Element;
+import model.MyElement;
 import model.uml.UMLAssociation;
 import model.uml.UMLClass;
 import model.uml.UMLGeneralization;
 import model.uml.UMLRealization;
 import painter.Painter;
-import painter.PainterFactoryException;
 
 public class UMLPainterFactory {
-    public Painter getPainter(Element element) throws PainterFactoryException {
-        Painter painter;
-        switch (element.getClass().getSimpleName()) {
+    public void createPainter(MyElement myElement) {
+        Painter painter = null;
+        switch (myElement.getClass().getSimpleName()) {
             case "UMLAssociation":
-                painter = getAssociationPainter(element);
+                painter = new UMLAssociationPainter((UMLAssociation) myElement);
                 break;
             case "UMLClass":
-                painter = getClassPainter(element);
+                painter = new UMLClassPainter((UMLClass) myElement);;
                 break;
             case "UMLGeneralization":
-                painter = getGeneralizationPainter(element);
+                painter = new UMLGeneralizationPainter((UMLGeneralization) myElement);;
                 break;
             case "UMLRealization":
-                painter = getRealizationPainter(element);
+                painter = new UMLRealizationPainter((UMLRealization) myElement);;
                 break;
             default:
-                throw new PainterFactoryException(element.getClass().getSimpleName());
+                //throw new PainterFactoryException(myElement.getClass().getSimpleName());
+                break;
         }
-        element.setPainter(painter);
-        return painter;
-    }
-
-    private UMLAssociationPainter getAssociationPainter(Element element) {
-        return new UMLAssociationPainter((UMLAssociation) element);
-    }
-
-    private UMLGeneralizationPainter getGeneralizationPainter(Element element) {
-        return new UMLGeneralizationPainter((UMLGeneralization) element);
-    }
-
-    private UMLRealizationPainter getRealizationPainter(Element element) {
-        return new UMLRealizationPainter((UMLRealization) element);
-    }
-
-    private UMLClassPainter getClassPainter(Element element) {
-        return new UMLClassPainter((UMLClass) element);
+        myElement.setPainter(painter);
     }
 }

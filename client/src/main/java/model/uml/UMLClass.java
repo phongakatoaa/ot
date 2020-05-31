@@ -1,10 +1,11 @@
 package model.uml;
 
-import model.Element;
+import model.MyElement;
 
 import java.util.ArrayList;
 
-public class UMLClass extends Element {
+public class UMLClass extends MyElement {
+    private String id;
     private final UMLClassName name;
     private final ArrayList<UMLAttribute> attributes;
     private final ArrayList<UMLOperation> operations;
@@ -54,6 +55,14 @@ public class UMLClass extends Element {
     public void setPosition(int x, int y) {
         this.x = x;
         this.y = y;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public void addAttribute(UMLAttribute attribute) {

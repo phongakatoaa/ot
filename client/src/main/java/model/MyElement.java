@@ -2,7 +2,7 @@ package model;
 
 import painter.Painter;
 
-public abstract class Element {
+public abstract class MyElement {
     private Painter painter;
 
     public Painter getPainter() {

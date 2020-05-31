@@ -1,6 +1,6 @@
 package ui;
 
-import model.EditableElement;
+import model.MyEditableElement;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,9 +8,9 @@ import java.awt.event.*;
 
 public class DiagramTextField extends JTextField {
 
-    private final EditableElement element;
+    private final MyEditableElement element;
 
-    public DiagramTextField(EditableElement element) {
+    public DiagramTextField(MyEditableElement element) {
         super();
         this.element = element;
         this.setText(element.getValue());

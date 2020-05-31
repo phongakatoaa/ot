@@ -152,7 +152,7 @@ public abstract class UMLRelationshipPainter extends Painter {
                 }
             }
         }
-        System.out.println("dx: " + dX + ", dy: " + dY + ", degree: " + degree + ", rotate: " + rotateDegree);
+        //System.out.println("dx: " + dX + ", dy: " + dY + ", degree: " + degree + ", rotate: " + rotateDegree);
         this.x1 = (int) dx1;
         this.x2 = (int) dx2;
         this.y1 = (int) dy1;

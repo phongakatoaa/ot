@@ -1,13 +1,13 @@
 package model;
 
-public abstract class EditableElement extends Element {
+public abstract class MyEditableElement extends MyElement {
     private String value;
 
-    public EditableElement() {
+    public MyEditableElement() {
 
     }
 
-    public EditableElement(String value) {
+    public MyEditableElement(String value) {
         this.value = value;
     }
 

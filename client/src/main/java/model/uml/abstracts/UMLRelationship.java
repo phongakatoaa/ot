@@ -1,9 +1,9 @@
 package model.uml.abstracts;
 
-import model.Element;
+import model.MyElement;
 import model.uml.UMLClass;
 
-public abstract class UMLRelationship extends Element {
+public abstract class UMLRelationship extends MyElement {
     private UMLClass src;
     private UMLClass desc;
 

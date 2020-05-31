@@ -1,7 +1,5 @@
 package ui;
 
-import model.uml.UMLDiagram;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -10,6 +8,7 @@ public class MyFrame extends JFrame {
     private final MyMenuBar menuBar;
     private final MyToolbar toolbar;
     private final XMLViewer xmlViewer;
+    private final JScrollPane xmlViewerScrollPane;
     private final MyCanvas myCanvas;
     private final Chat chat;
 
@@ -24,16 +23,16 @@ public class MyFrame extends JFrame {
         xmlViewer = new XMLViewer();
         myCanvas = new MyCanvas();
         chat = new Chat();
-
-        myCanvas.setDiagram(new UMLDiagram("example"));
+        xmlViewerScrollPane = new JScrollPane(xmlViewer);
 
         JSplitPane splitPane = new JSplitPane();
         JSplitPane subSplitPane = new JSplitPane();
 
         menuBar.setFrame(this);
         menuBar.setXmlViewer(xmlViewer);
-        splitPane.setLeftComponent(new JScrollPane(xmlViewer));
+        splitPane.setLeftComponent(xmlViewerScrollPane);
         splitPane.setRightComponent(myCanvas);
+        splitPane.setResizeWeight(0.15);
 
         this.setJMenuBar(menuBar);
         this.add(toolbar, BorderLayout.PAGE_START);
@@ -55,5 +54,9 @@ public class MyFrame extends JFrame {
 
     public Chat getChat() {
         return chat;
+    }
+
+    public JScrollPane getXmlViewerScrollPane() {
+        return xmlViewerScrollPane;
     }
 }
