@@ -86,6 +86,7 @@ public class CreateRelationshipMouseListener implements MouseListener, MouseMoti
             canvas.removeMouseMotionListener(this);
             canvas.resetMouseListeners();
             canvas.setCursor(Cursor.getDefaultCursor());
+            canvas.repaint();
         }
     }
 
