@@ -2,31 +2,54 @@ package ui;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
 
 public class MyFrame extends JFrame {
     private static final String APP_TITLE = "UML Collaborative Editor";
+    private final MyMenuBar menuBar;
+    private final MyToolbar toolbar;
+    private final XMLViewer xmlViewer;
+    private final MyCanvas myCanvas;
+    private final Chat chat;
 
-    public MyFrame() throws IOException {
+    public MyFrame() {
         super(APP_TITLE);
         this.setExtendedState(MAXIMIZED_BOTH);
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         this.setLayout(new BorderLayout());
-        //this.setUndecorated(true);
-        JMenuBar menubar = new MyMenuBar();
-        this.setJMenuBar(menubar);
 
-        JToolBar toolBar = new MyToolbar();
-        this.add(toolBar, BorderLayout.PAGE_START);
+        menuBar = new MyMenuBar();
+        xmlViewer = new XMLViewer();
+        myCanvas = new MyCanvas();
+        toolbar = new MyToolbar(myCanvas);
+        chat = new Chat();
 
-        XMLViewer xmlViewer = new XMLViewer();
-        xmlViewer.read("examples/book.xml");
-        this.add(xmlViewer, BorderLayout.LINE_START);
+        JSplitPane splitPane = new JSplitPane();
 
-        Canvas canvas = new Canvas();
-        this.add(canvas, BorderLayout.CENTER);
+        menuBar.setFrame(this);
+        menuBar.setXmlViewer(xmlViewer);
+        splitPane.setLeftComponent(new JScrollPane(xmlViewer));
+        splitPane.setRightComponent(new JScrollPane(myCanvas));
+        splitPane.setResizeWeight(0.15);
 
-        Chat chat = new Chat();
+        this.setJMenuBar(menuBar);
+        this.add(toolbar, BorderLayout.PAGE_START);
+        this.add(splitPane, BorderLayout.CENTER);
         this.add(chat, BorderLayout.LINE_END);
+    }
+
+    public MyToolbar getToolbar() {
+        return toolbar;
+    }
+
+    public XMLViewer getXmlViewer() {
+        return xmlViewer;
+    }
+
+    public MyCanvas getMyCanvas() {
+        return myCanvas;
+    }
+
+    public Chat getChat() {
+        return chat;
     }
 }
