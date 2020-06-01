@@ -1,9 +1,9 @@
 package model.uml;
 
-import model.uml.abstracts.UMLDirectedRelationship;
+import model.uml.abstracts.UMLRelationship;
 
-public class UMLRealization extends UMLDirectedRelationship {
-    public UMLRealization(UMLClass first, UMLClass second) {
-        super(first, second);
+public class UMLRealization extends UMLRelationship {
+    public UMLRealization(UMLClass src, UMLClass desc) {
+        super(src, desc, UMLRelationshipType.REALIZATION);
     }
 }

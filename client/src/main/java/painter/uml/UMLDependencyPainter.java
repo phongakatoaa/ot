@@ -1,22 +1,22 @@
 package painter.uml;
 
-import model.uml.UMLAssociation;
+import model.uml.abstracts.UMLRelationship;
 import ui.Constants;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 
-public class UMLAssociationPainter extends UMLRelationshipPainter {
-    public UMLAssociationPainter(UMLAssociation umlAssociation) {
-        super(umlAssociation);
+public class UMLDependencyPainter extends UMLRelationshipPainter {
+    public UMLDependencyPainter(UMLRelationship umlRelationship) {
+        super(umlRelationship);
     }
 
     @Override
     public void paint(Graphics2D graphics2D) {
         if (isHovered()) {
-            graphics2D.setStroke(Constants.THICK_STROKE);
+            graphics2D.setStroke(Constants.DASHED_THICK_STROKE);
         } else {
-            graphics2D.setStroke(Constants.THIN_STROKE);
+            graphics2D.setStroke(Constants.DASHED_THIN_STROKE);
         }
         super.paint(graphics2D);
         graphics2D.setStroke(Constants.THIN_STROKE);

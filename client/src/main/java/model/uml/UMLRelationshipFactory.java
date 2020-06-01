@@ -11,6 +11,8 @@ public class UMLRelationshipFactory {
                 return new UMLRealization(src, desc);
             case GENERALIZATION:
                 return new UMLGeneralization(src, desc);
+            case DEPENDENCY:
+                return new UMLDependency(src, desc);
             default:
                 return null;
         }

@@ -19,7 +19,7 @@
                 <attribute>model</attribute>
             </attributes>
             <operations>
-                <operation>settBrand()</operation>
+                <operation>setBrand()</operation>
                 <operation>getBrand()</operation>
                 <operation>getModel()</operation>
                 <operation>setModel()</operation>

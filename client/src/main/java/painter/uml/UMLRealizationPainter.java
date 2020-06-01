@@ -19,8 +19,6 @@ public class UMLRealizationPainter extends UMLRelationshipPainter {
             graphics2D.setStroke(Constants.DASHED_THIN_STROKE);
         }
         super.paint(graphics2D);
-        int[] xPts = {x2, x2 - 10, x2 + 10};
-        int[] yPts = {y2, y2 - 10, y2 - 10};
         graphics2D.setStroke(Constants.MEDIUM_STROKE);
         AffineTransform oldTransform = graphics2D.getTransform();
         Paint oldPaint = graphics2D.getPaint();

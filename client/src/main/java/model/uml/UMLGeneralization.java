@@ -1,9 +1,9 @@
 package model.uml;
 
-import model.uml.abstracts.UMLDirectedRelationship;
+import model.uml.abstracts.UMLRelationship;
 
-public class UMLGeneralization extends UMLDirectedRelationship {
-    public UMLGeneralization(UMLClass first, UMLClass second) {
-        super(first, second);
+public class UMLGeneralization extends UMLRelationship {
+    public UMLGeneralization(UMLClass src, UMLClass desc) {
+        super(src, desc, UMLRelationshipType.GENERALIZATION);
     }
 }

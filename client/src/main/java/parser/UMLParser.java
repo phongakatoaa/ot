@@ -39,6 +39,7 @@ public class UMLParser extends XMLParser {
 
             return diagram;
         } catch (Exception e) {
+            e.printStackTrace();
             throw new MyXMLParserException(e.getMessage());
         }
     }
@@ -85,6 +86,9 @@ public class UMLParser extends XMLParser {
                 break;
             case "association":
                 relationship = new UMLAssociation(src, desc);
+                break;
+            case "dependency":
+                relationship = new UMLDependency(src, desc);
                 break;
             default:
                 throw new MyXMLParserException("relationship type not found");
