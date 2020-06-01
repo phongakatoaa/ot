@@ -47,4 +47,8 @@ public class UMLDiagram {
     public void removeRelationship(UMLRelationship umlRelationship) {
         this.umlRelationships.remove(umlRelationship);
     }
+
+    public boolean relationshipExists(UMLClass src, UMLClass desc) {
+        return this.umlRelationships.stream().anyMatch(r -> r.getSrc().equals(src) && r.getDesc().equals(desc));
+    }
 }

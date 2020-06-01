@@ -63,13 +63,17 @@ public class CreateRelationshipMouseListener implements MouseListener, MouseMoti
                 for (Painter painter : canvas.getPainters()) {
                     if (painter.intersectMouse(e.getX(), e.getY()) && painter instanceof UMLClassPainter) {
                         UMLClass classDesc = ((UMLClassPainter) painter).getUmlClass();
-                        System.out.println(classDesc.getName().getValue());
-                        UMLRelationshipFactory relationshipFactory = new UMLRelationshipFactory();
-                        UMLRelationship relationship = relationshipFactory.createRelationship(relationshipType, classSrc, classDesc);
-                        UMLPainterFactory painterFactory = new UMLPainterFactory();
-                        painterFactory.createPainter(relationship);
-                        canvas.getDiagram().addRelationship(relationship);
-                        canvas.bindDiagram();
+                        if(canvas.getDiagram().relationshipExists(classSrc, classDesc)) {
+                            JOptionPane.showMessageDialog(null,
+                                    "A relationship between two class is already created", "Error", JOptionPane.ERROR_MESSAGE);
+                        } else {
+                            UMLRelationshipFactory relationshipFactory = new UMLRelationshipFactory();
+                            UMLRelationship relationship = relationshipFactory.createRelationship(relationshipType, classSrc, classDesc);
+                            UMLPainterFactory painterFactory = new UMLPainterFactory();
+                            painterFactory.createPainter(relationship);
+                            canvas.getDiagram().addRelationship(relationship);
+                            canvas.bindDiagram();
+                        }
                         break;
                     }
                 }

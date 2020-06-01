@@ -55,14 +55,14 @@ public class DiagramTextField extends JTextField {
 
             @Override
             public void mouseClicked(MouseEvent e) {
+                //updateLayout(true);
                 requestFocus();
-                updateLayout(true);
             }
         });
     }
 
     private void updateLayout(boolean focus) {
-        this.getCaret().setVisible(focus);
+        this.setEditable(focus);
         if (focus) {
             this.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Constants.DEFAULT_BORDER_COLOR));
             this.selectAll();
