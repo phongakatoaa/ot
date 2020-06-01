@@ -22,7 +22,6 @@ public class MyCanvas extends JPanel implements MouseMotionListener, MouseListen
 
     private UMLDiagram diagram;
     private Painter focusedPainter;
-    private boolean drawConnectLine;
 
     public MyCanvas() {
         super();

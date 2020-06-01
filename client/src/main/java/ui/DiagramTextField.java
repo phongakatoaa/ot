@@ -27,12 +27,12 @@ public class DiagramTextField extends JTextField {
         this.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
-                update(false);
+                updateLayout(false);
             }
 
             @Override
             public void focusGained(FocusEvent e) {
-                update(true);
+                updateLayout(true);
             }
         });
 
@@ -40,7 +40,7 @@ public class DiagramTextField extends JTextField {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    update(false);
+                    updateLayout(false);
                 } else if(e.getKeyCode() == KeyEvent.VK_TAB) {
                     transferFocus();
                 }
@@ -56,12 +56,12 @@ public class DiagramTextField extends JTextField {
             @Override
             public void mouseClicked(MouseEvent e) {
                 requestFocus();
-                update(true);
+                updateLayout(true);
             }
         });
     }
 
-    private void update(boolean focus) {
+    private void updateLayout(boolean focus) {
         this.getCaret().setVisible(focus);
         if (focus) {
             this.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Constants.DEFAULT_BORDER_COLOR));

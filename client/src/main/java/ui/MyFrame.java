@@ -8,7 +8,6 @@ public class MyFrame extends JFrame {
     private final MyMenuBar menuBar;
     private final MyToolbar toolbar;
     private final XMLViewer xmlViewer;
-    private final JScrollPane xmlViewerScrollPane;
     private final MyCanvas myCanvas;
     private final Chat chat;
 
@@ -23,15 +22,13 @@ public class MyFrame extends JFrame {
         myCanvas = new MyCanvas();
         toolbar = new MyToolbar(myCanvas);
         chat = new Chat();
-        xmlViewerScrollPane = new JScrollPane(xmlViewer);
 
         JSplitPane splitPane = new JSplitPane();
-        JSplitPane subSplitPane = new JSplitPane();
 
         menuBar.setFrame(this);
         menuBar.setXmlViewer(xmlViewer);
-        splitPane.setLeftComponent(xmlViewerScrollPane);
-        splitPane.setRightComponent(myCanvas);
+        splitPane.setLeftComponent(new JScrollPane(xmlViewer));
+        splitPane.setRightComponent(new JScrollPane(myCanvas));
         splitPane.setResizeWeight(0.15);
 
         this.setJMenuBar(menuBar);
@@ -54,9 +51,5 @@ public class MyFrame extends JFrame {
 
     public Chat getChat() {
         return chat;
-    }
-
-    public JScrollPane getXmlViewerScrollPane() {
-        return xmlViewerScrollPane;
     }
 }
