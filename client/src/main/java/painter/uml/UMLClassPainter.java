@@ -19,12 +19,12 @@ public class UMLClassPainter extends Painter {
 
     public UMLClassPainter(UMLClass umlClass) {
         this.umlClass = umlClass;
-        this.classNameTextField = new DiagramTextField(umlClass.getName());
+        this.classNameTextField = new DiagramTextField(umlClass.getName(), null);
         this.classNameTextField.setHorizontalAlignment(SwingConstants.CENTER);
         this.attributeTextFields = new ArrayList<>();
         this.operationTextFields = new ArrayList<>();
-        this.umlClass.getAttributes().forEach(attr -> attributeTextFields.add(new DiagramTextField(attr)));
-        this.umlClass.getOperations().forEach(op -> operationTextFields.add(new DiagramTextField(op)));
+        this.umlClass.getAttributes().forEach(attr -> attributeTextFields.add(new DiagramTextField(attr, this.umlClass)));
+        this.umlClass.getOperations().forEach(op -> operationTextFields.add(new DiagramTextField(op, this.umlClass)));
         this.classRectangle = new Rectangle();
     }
 
@@ -93,11 +93,24 @@ public class UMLClassPainter extends Painter {
 
     public void bindTextFields(MyCanvas myCanvas) {
         myCanvas.add(this.classNameTextField);
-        this.attributeTextFields.forEach(myCanvas::add);
-        this.operationTextFields.forEach(myCanvas::add);
+        this.attributeTextFields.forEach(attr -> {
+            attr.getPopupMenu().setCanvas(myCanvas);
+            myCanvas.add(attr);
+        });
+        this.operationTextFields.forEach(op -> {
+            op.getPopupMenu().setCanvas(myCanvas);
+            myCanvas.add(op);
+        });
     }
 
     public Rectangle getClassRectangle() {
         return classRectangle;
+    }
+
+    public void revalidateProperties() {
+        this.attributeTextFields.clear();
+        this.operationTextFields.clear();
+        this.umlClass.getAttributes().forEach(attr -> attributeTextFields.add(new DiagramTextField(attr, this.umlClass)));
+        this.umlClass.getOperations().forEach(op -> operationTextFields.add(new DiagramTextField(op, this.umlClass)));
     }
 }

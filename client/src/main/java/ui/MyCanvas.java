@@ -1,23 +1,22 @@
 package ui;
 
-import model.uml.UMLClass;
 import model.uml.UMLDiagram;
-import model.uml.UMLRelationshipType;
-import model.uml.abstracts.UMLRelationship;
 import painter.Painter;
 import painter.uml.UMLClassPainter;
-import painter.uml.UMLPainterFactory;
 import painter.uml.UMLRelationshipPainter;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
 public class MyCanvas extends JPanel implements MouseMotionListener, MouseListener {
     private final ArrayList<Painter> painters;
     private final TranslateControl translateControl;
     private final ArrayList<Shape> customShapes;
+    private final MyCanvasPopupMenu canvasPopupMenu;
     private int mouseX, mouseY;
 
     private UMLDiagram diagram;
@@ -29,6 +28,7 @@ public class MyCanvas extends JPanel implements MouseMotionListener, MouseListen
         this.painters = new ArrayList<>();
         this.customShapes = new ArrayList<>();
         this.translateControl = new TranslateControl();
+        this.canvasPopupMenu = new MyCanvasPopupMenu(this);
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
     }
@@ -81,23 +81,22 @@ public class MyCanvas extends JPanel implements MouseMotionListener, MouseListen
     @Override
     public void mouseClicked(MouseEvent e) {
         if (SwingUtilities.isRightMouseButton(e)) {
-            JPopupMenu popupMenu = new JPopupMenu();
-            JMenuItem menuItem = new JMenuItem();
             boolean intersect = false;
             for (Painter painter : this.painters) {
                 if (painter.intersectMouse(e.getX(), e.getY())) {
-                    menuItem.setText("Delete");
-                    menuItem.addActionListener(e1 -> onClickDeleteElement(painter));
                     intersect = true;
+                    if (painter instanceof UMLClassPainter) {
+                        this.canvasPopupMenu.bind(((UMLClassPainter) painter).getUmlClass());
+                    } else if (painter instanceof UMLRelationshipPainter) {
+                        this.canvasPopupMenu.bind(((UMLRelationshipPainter) painter).getUmlRelationship());
+                    }
                     break;
                 }
             }
             if (!intersect) {
-                menuItem.setText("New Class");
-                menuItem.addActionListener(e1 -> onClickAddClass(e.getX(), e.getY()));
+                this.canvasPopupMenu.bind(e.getX(), e.getY());
             }
-            popupMenu.add(menuItem);
-            popupMenu.show(e.getComponent(), e.getX(), e.getY());
+            this.canvasPopupMenu.show(this, e.getX(), e.getY());
         }
     }
 
@@ -151,54 +150,12 @@ public class MyCanvas extends JPanel implements MouseMotionListener, MouseListen
         this.repaint();
     }
 
-    public void onClickAddClass(int x, int y) {
-        String errorMessage = null;
-        if (this.diagram == null) {
-            errorMessage = "Please create/open a diagram first";
-        } else {
-            String value = JOptionPane.showInputDialog(this, "Enter new class name").trim();
-            if (value.length() == 0) {
-                errorMessage = "Class name cannot be empty";
-            } else {
-                UMLClass umlClass = new UMLClass(value);
-                umlClass.setPosition(x, y);
-                UMLPainterFactory painterFactory = new UMLPainterFactory();
-                UMLClassPainter painter = (UMLClassPainter) painterFactory.createPainter(umlClass);
-                this.diagram.addClass(umlClass);
-                this.bindDiagram();
-                this.repaint();
-            }
-        }
-        if (errorMessage != null) {
-            JOptionPane.showMessageDialog(this, errorMessage, "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    public void onClickDeleteElement(Painter painter) {
-        String confirmMessage = null;
-        int confirm = JOptionPane.showConfirmDialog(null, "Are you sure?");
-        if (confirm == JOptionPane.YES_OPTION) {
-            if (painter instanceof UMLClassPainter) {
-                UMLClass umlClass = ((UMLClassPainter) painter).getUmlClass();
-                this.diagram.removeClass(umlClass);
-            } else if (painter instanceof UMLRelationshipPainter) {
-                UMLRelationship umlRelationship = ((UMLRelationshipPainter) painter).getUmlRelationship();
-                this.diagram.removeRelationship(umlRelationship);
-            }
-            this.bindDiagram();
-            this.repaint();
-        }
-    }
-
-    public void onClickCreateRelationship(UMLRelationshipType type) {
+    public void unbindMouseListeners() {
         this.removeMouseListener(this);
         this.removeMouseMotionListener(this);
-        CreateRelationshipMouseListener l = new CreateRelationshipMouseListener(this, type);
-        this.addMouseListener(l);
-        this.addMouseMotionListener(l);
     }
 
-    public void resetMouseListener() {
+    public void resetMouseListeners() {
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
     }

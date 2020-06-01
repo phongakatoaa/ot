@@ -1,6 +1,7 @@
 package ui;
 
 import model.MyEditableElement;
+import model.uml.UMLClass;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,10 +10,13 @@ import java.awt.event.*;
 public class DiagramTextField extends JTextField {
 
     private final MyEditableElement element;
+    private final DiagramTextFieldPopupMenu popupMenu;
 
-    public DiagramTextField(MyEditableElement element) {
+    public DiagramTextField(MyEditableElement element, UMLClass umlClass) {
         super();
         this.element = element;
+        this.popupMenu = new DiagramTextFieldPopupMenu(element, umlClass);
+
         this.setText(element.getValue());
         bind();
     }
@@ -41,7 +45,7 @@ public class DiagramTextField extends JTextField {
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_ESCAPE) {
                     updateLayout(false);
-                } else if(e.getKeyCode() == KeyEvent.VK_TAB) {
+                } else if (e.getKeyCode() == KeyEvent.VK_TAB) {
                     transferFocus();
                 }
             }
@@ -56,7 +60,11 @@ public class DiagramTextField extends JTextField {
             @Override
             public void mouseClicked(MouseEvent e) {
                 //updateLayout(true);
-                requestFocus();
+                if (SwingUtilities.isRightMouseButton(e)) {
+                    popupMenu.show(e.getComponent(), e.getX(), e.getY());
+                } else {
+                    requestFocus();
+                }
             }
         });
     }
@@ -76,5 +84,13 @@ public class DiagramTextField extends JTextField {
                 this.element.setValue(newValue);
             }
         }
+    }
+
+    public MyEditableElement getElement() {
+        return element;
+    }
+
+    public DiagramTextFieldPopupMenu getPopupMenu() {
+        return popupMenu;
     }
 }
