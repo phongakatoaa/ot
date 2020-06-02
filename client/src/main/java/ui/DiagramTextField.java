@@ -59,10 +59,10 @@ public class DiagramTextField extends JTextField {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                //updateLayout(true);
                 if (SwingUtilities.isRightMouseButton(e)) {
                     popupMenu.show(e.getComponent(), e.getX(), e.getY());
                 } else {
+                    updateLayout(true);
                     requestFocus();
                 }
             }
@@ -71,6 +71,7 @@ public class DiagramTextField extends JTextField {
 
     private void updateLayout(boolean focus) {
         this.setEditable(focus);
+        this.getCaret().setVisible(focus);
         if (focus) {
             this.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Constants.DEFAULT_BORDER_COLOR));
             this.selectAll();

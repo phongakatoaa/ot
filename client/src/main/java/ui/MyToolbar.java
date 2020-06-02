@@ -41,10 +41,17 @@ public class MyToolbar extends JToolBar {
         buttonNewAggregation = new JButton("New Aggregation");
         buttonNewComposition = new JButton("New Composition");
 
+        buttonNewAttribute.setVisible(false);
+        buttonNewOperation.setVisible(false);
+        buttonNewMultiplicity.setVisible(false);
+        buttonNewAggregation.setVisible(false);
+        buttonNewComposition.setVisible(false);
+
         buttonNewClass.addActionListener(e -> onClickAddClass());
         buttonNewGeneralization.addActionListener(e -> onClickCreateRelationship(UMLRelationshipType.GENERALIZATION));
         buttonNewRealization.addActionListener(e -> onClickCreateRelationship(UMLRelationshipType.REALIZATION));
         buttonNewAssociation.addActionListener(e -> onClickCreateRelationship(UMLRelationshipType.ASSOCIATION));
+        buttonNewDependency.addActionListener(e -> onClickCreateRelationship(UMLRelationshipType.DEPENDENCY));
 
         this.add(buttonNewClass);
         this.add(buttonNewAttribute);
