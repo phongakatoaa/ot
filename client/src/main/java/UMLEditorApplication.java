@@ -46,7 +46,7 @@ public class UMLEditorApplication {
 //        UMLRealizationPainter painter3 = new UMLRealizationPainter(umlRealization);
 //        umlRealization.setPainter(painter3);
 //        diagram.addRelationship(umlRealization);
-        File file = new File("examples/example_db.xml");
+        File file = new File("client/examples/example_db.xml");
         UMLParser parser = new UMLParser();
         UMLDiagram diagram = parser.parse(file);
         frame.getMyCanvas().setDiagram(diagram);
