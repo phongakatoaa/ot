@@ -1,9 +1,12 @@
 package com.uet.ot_server.service;
 
+import com.uet.ot_server.database.OTFileRepository;
+import com.uet.ot_server.model.OTFile;
 import com.uet.ot_server.service.exceptions.BusinessServiceException;
 import com.uet.ot_server.service.exceptions.CustomFileNotFoundException;
 import com.uet.ot_server.service.exceptions.FileStorageException;
 import org.apache.commons.io.FileUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -21,6 +24,9 @@ import java.util.Objects;
 
 @Service
 public class FileServiceImpl implements FileService {
+    @Autowired
+    private OTFileRepository otFileRepository;
+
     @Override
     public Path createPath(String dir) {
         try {
@@ -66,13 +72,12 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public void storeFile(MultipartFile file, String saveLocation) throws FileStorageException {
-
-        Path savePath = createPath("files/" + saveLocation);
+    public OTFile storeFile(MultipartFile file) throws FileStorageException {
+        OTFile otFile = new OTFile();
+        Path savePath = createPath("files/");
 //        String fileTimeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
 //        LocalDateTime timeStamp = LocalDateTime.now();
         String originalFileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
-//        String extension = FilenameUtils.getExtension(originalFileName);
         try {
             // Check if the file's name contains invalid characters
             if (originalFileName.contains("..")) {
@@ -81,14 +86,17 @@ public class FileServiceImpl implements FileService {
             assert savePath != null;
             Path targetLocation = savePath.resolve(originalFileName);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+            otFile.setName(originalFileName);
+            otFile.setInEdit(false);
+            return otFileRepository.save(otFile);
         } catch (IOException ex) {
             throw new FileStorageException("Could not store file " + originalFileName + ". Please try again!", ex);
         }
     }
 
     @Override
-    public Resource loadFileAsResource(String fileName, String saveLocation) {
-        Path path = createPath("files/" + saveLocation);
+    public Resource loadFileAsResource(String fileName) {
+        Path path = createPath("files/");
         try {
             assert path != null;
             Path filePath = path.resolve(fileName).normalize();

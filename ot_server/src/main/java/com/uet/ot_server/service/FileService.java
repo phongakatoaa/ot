@@ -1,5 +1,6 @@
 package com.uet.ot_server.service;
 
+import com.uet.ot_server.model.OTFile;
 import com.uet.ot_server.service.exceptions.BusinessServiceException;
 import com.uet.ot_server.service.exceptions.FileStorageException;
 import org.springframework.core.io.Resource;
@@ -19,9 +20,9 @@ public interface FileService {
 
     boolean deleteFile(String filePath) throws IOException;
 
-    void storeFile(MultipartFile file, String saveLocation) throws FileStorageException, BusinessServiceException;
+    OTFile storeFile(MultipartFile file) throws FileStorageException, BusinessServiceException;
 
-    Resource loadFileAsResource(String fileName, String saveLocation);
+    Resource loadFileAsResource(String fileName);
 
     boolean deleteDirectory(String dir);
 }

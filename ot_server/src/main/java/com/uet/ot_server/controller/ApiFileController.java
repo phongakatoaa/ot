@@ -1,5 +1,7 @@
 package com.uet.ot_server.controller;
 
+import com.uet.ot_server.model.OTFile;
+import com.uet.ot_server.model.ResponseMessage;
 import com.uet.ot_server.service.FileService;
 import com.uet.ot_server.service.exceptions.BusinessServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,18 +24,19 @@ public class ApiFileController {
     private FileService fileService;
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public ResponseEntity<Object> uploadRepoFile(@RequestParam("file") MultipartFile file, String path) {
+    public ResponseEntity<Object> uploadRepoFile(@RequestParam("file") MultipartFile file) {
         try {
-            fileService.storeFile(file, path);
-            return ResponseEntity.status(HttpStatus.OK).body("uploaded");
+            OTFile otFile = fileService.storeFile(file);
+            String downloadPath = "/api/files/" + otFile.getName();
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(otFile.get_id(), downloadPath));
         } catch (BusinessServiceException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
-    @RequestMapping(value = "/{path}/{filename}", method = RequestMethod.GET)
-    private ResponseEntity<Resource> getResourceResponseEntity(HttpServletRequest request, @PathVariable String path, @PathVariable String filename) {
-        Resource resource = fileService.loadFileAsResource(filename, path);
+    @RequestMapping(value = "/{filename}", method = RequestMethod.GET)
+    private ResponseEntity<Resource> getResourceResponseEntity(HttpServletRequest request, @PathVariable String filename) {
+        Resource resource = fileService.loadFileAsResource(filename);
         String contentType = null;
         String fileName = Objects.requireNonNull(resource.getFilename());
         try {
