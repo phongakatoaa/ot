@@ -10,7 +10,7 @@
     </class>
     <class name="Car" x="200" y="200" id="c_2">
         <attribute id="a_3">brand</attribute>
-        <attribute id="a_4">model</attribute>
+        <attribute id="a_4">com.uet.model</attribute>
         <operation id="o_5">setBrand()</operation>
         <operation id="o_6">getBrand()</operation>
         <operation id="o_7">getModel()</operation>
