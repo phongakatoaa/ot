@@ -1,8 +1,8 @@
 package com.uet.ot.operation;
 
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.Parent;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.Parent;
 
 public class Delete extends Operation {
     private final String nodeId;

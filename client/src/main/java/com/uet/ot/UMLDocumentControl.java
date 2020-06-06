@@ -1,6 +1,6 @@
 package com.uet.ot;
 
-import org.jdom.Document;
+import org.jdom2.Document;
 import com.uet.ot.helper.UMLElementFinder;
 import com.uet.ot.operation.Operation;
 import com.uet.ui.XMLViewer;
