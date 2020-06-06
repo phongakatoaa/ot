@@ -54,6 +54,7 @@ public class DiagramTextField extends JTextField {
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
+                setForeground(Color.red);
                 setCursor(new Cursor(Cursor.TEXT_CURSOR));
             }
 
@@ -65,6 +66,11 @@ public class DiagramTextField extends JTextField {
                     updateLayout(true);
                     requestFocus();
                 }
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setForeground(Color.black);
             }
         });
     }

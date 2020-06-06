@@ -72,17 +72,20 @@ public class MyToolbar extends JToolBar {
         if (canvas.getDiagram() == null) {
             errorMessage = "Please create/open a diagram first";
         } else {
-            String value = JOptionPane.showInputDialog(null, "Enter new class name").trim();
-            if (value.length() == 0) {
-                errorMessage = "Class name cannot be empty";
-            } else {
-                UMLClass umlClass = new UMLClass(value);
-                umlClass.setPosition(50, 50);
-                UMLPainterFactory painterFactory = new UMLPainterFactory();
-                UMLClassPainter painter = (UMLClassPainter) painterFactory.createPainter(umlClass);
-                canvas.getDiagram().addClass(umlClass);
-                canvas.bindDiagram();
-                this.repaint();
+            String value = JOptionPane.showInputDialog(null, "Enter new class name");
+            if (value != null) {
+                value = value.trim();
+                if (value.length() == 0) {
+                    errorMessage = "Class name cannot be empty";
+                } else {
+                    UMLClass umlClass = new UMLClass(value);
+                    umlClass.setPosition(50, 50);
+                    UMLPainterFactory painterFactory = new UMLPainterFactory();
+                    UMLClassPainter painter = (UMLClassPainter) painterFactory.createPainter(umlClass);
+                    canvas.getDiagram().addClass(umlClass);
+                    canvas.bindDiagram();
+                    this.repaint();
+                }
             }
         }
         if (errorMessage != null) {

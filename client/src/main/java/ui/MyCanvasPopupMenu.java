@@ -93,17 +93,20 @@ public class MyCanvasPopupMenu extends JPopupMenu {
         if (canvas.getDiagram() == null) {
             errorMessage = "Please create/open a diagram first";
         } else {
-            String value = JOptionPane.showInputDialog(null, "Enter new class name").trim();
-            if (value.length() == 0) {
-                errorMessage = "Class name cannot be empty";
-            } else {
-                UMLClass umlClass = new UMLClass(value);
-                umlClass.setPosition(x, y);
-                UMLPainterFactory painterFactory = new UMLPainterFactory();
-                UMLClassPainter painter = (UMLClassPainter) painterFactory.createPainter(umlClass);
-                canvas.getDiagram().addClass(umlClass);
-                canvas.bindDiagram();
-                canvas.repaint();
+            String value = JOptionPane.showInputDialog(null, "Enter new class name");
+            if(value != null) {
+                value = value.trim();
+                if (value.length() == 0) {
+                    errorMessage = "Class name cannot be empty";
+                } else {
+                    UMLClass umlClass = new UMLClass(value);
+                    umlClass.setPosition(x, y);
+                    UMLPainterFactory painterFactory = new UMLPainterFactory();
+                    UMLClassPainter painter = (UMLClassPainter) painterFactory.createPainter(umlClass);
+                    canvas.getDiagram().addClass(umlClass);
+                    canvas.bindDiagram();
+                    canvas.repaint();
+                }
             }
         }
         if (errorMessage != null) {
