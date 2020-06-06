@@ -2,8 +2,8 @@ package com.uet.parser;
 
 import com.uet.model.uml.*;
 import com.uet.model.uml.abstracts.UMLRelationship;
-import org.jdom.Document;
-import org.jdom.Element;
+import org.jdom2.Document;
+import org.jdom2.Element;
 import com.uet.painter.uml.UMLPainterFactory;
 
 import java.util.List;

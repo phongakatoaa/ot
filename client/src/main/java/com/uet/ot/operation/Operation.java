@@ -1,6 +1,6 @@
 package com.uet.ot.operation;
 
-import org.jdom.Document;
+import org.jdom2.Document;
 import com.uet.ot.helper.ElementFinder;
 
 public abstract class Operation {

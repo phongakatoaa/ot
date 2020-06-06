@@ -1,7 +1,7 @@
 package com.uet.ot.operation;
 
-import org.jdom.Document;
-import org.jdom.Element;
+import org.jdom2.Document;
+import org.jdom2.Element;
 
 public class Insert extends Operation {
     private final Element element;

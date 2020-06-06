@@ -5,7 +5,7 @@ import com.uet.model.uml.UMLAttribute;
 import com.uet.model.uml.UMLClass;
 import com.uet.model.uml.UMLOperation;
 import com.uet.model.uml.abstracts.UMLRelationship;
-import org.jdom.Element;
+import org.jdom2.Element;
 import com.uet.ot.operation.Delete;
 import com.uet.ot.operation.Insert;
 import com.uet.ot.operation.Operation;
