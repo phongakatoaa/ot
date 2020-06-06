@@ -6,13 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="uml_editor (1)" />
+        <module name="uml_editor" />
         <module name="ot_server" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="ot" target="1.8" />
-      <module name="uml_editor" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

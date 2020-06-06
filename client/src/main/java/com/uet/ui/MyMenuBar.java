@@ -1,8 +1,14 @@
 package com.uet.ui;
 
+import com.uet.model.uml.UMLDiagram;
+import com.uet.ot.UMLDocumentControl;
+import com.uet.parser.UMLParser;
+import org.jdom2.Document;
+import org.jdom2.input.SAXBuilder;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.io.IOException;
+import java.io.File;
 
 public class MyMenuBar extends JMenuBar {
     private final JMenu menuFile;
@@ -19,7 +25,7 @@ public class MyMenuBar extends JMenuBar {
     private final JFileChooser fileChooser;
 
     private XMLViewer xmlViewer;
-    private JFrame frame;
+    private MyFrame frame;
 
     public MyMenuBar() {
         super();
@@ -62,8 +68,19 @@ public class MyMenuBar extends JMenuBar {
         int result = this.fileChooser.showOpenDialog(null);
         if (result == JFileChooser.APPROVE_OPTION) {
             try {
-                this.xmlViewer.parseXML(fileChooser.getSelectedFile());
-            } catch (IOException e) {
+                File file = fileChooser.getSelectedFile();
+                SAXBuilder saxBuilder = new SAXBuilder();
+                Document document = saxBuilder.build(file);
+
+                UMLDocumentControl.getInstance().setDocument(document);
+                UMLDocumentControl.getInstance().setXmlViewer(frame.getXmlViewer());
+
+                UMLParser parser = new UMLParser();
+                UMLDiagram diagram = parser.parse(document);
+
+                frame.getMyCanvas().setDiagram(diagram);
+                frame.getXmlViewer().parseXML(file);
+            } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
@@ -81,11 +98,11 @@ public class MyMenuBar extends JMenuBar {
         this.xmlViewer = xmlViewer;
     }
 
-    public JFrame getFrame() {
+    public MyFrame getFrame() {
         return frame;
     }
 
-    public void setFrame(JFrame frame) {
+    public void setFrame(MyFrame frame) {
         this.frame = frame;
     }
 }

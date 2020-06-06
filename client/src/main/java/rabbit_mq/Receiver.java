@@ -11,6 +11,7 @@ public class Receiver {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setUsername("guest");
         factory.setPassword("guest");
+
         factory.setHost("localhost");
         factory.setPort(5672);
         factory.setVirtualHost("/");
