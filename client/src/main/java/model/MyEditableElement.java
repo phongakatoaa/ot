@@ -1,5 +1,8 @@
 package model;
 
+import ot.helper.CanvasEventToOperationMapper;
+import ot.operation.Operation;
+
 public abstract class MyEditableElement extends MyElement {
     private String value;
 

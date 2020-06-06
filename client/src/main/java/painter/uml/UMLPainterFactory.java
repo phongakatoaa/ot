@@ -28,7 +28,7 @@ public class UMLPainterFactory {
                     break;
             }
         }
-        System.out.println(painter);
+        //System.out.println(painter);
         myElement.setPainter(painter);
         return painter;
     }

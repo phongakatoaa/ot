@@ -5,6 +5,7 @@ import java.awt.*;
 
 public class MyFrame extends JFrame {
     private static final String APP_TITLE = "UML Collaborative Editor";
+
     private final MyMenuBar menuBar;
     private final MyToolbar toolbar;
     private final XMLViewer xmlViewer;

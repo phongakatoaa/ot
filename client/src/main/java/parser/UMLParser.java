@@ -4,10 +4,8 @@ import model.uml.*;
 import model.uml.abstracts.UMLRelationship;
 import org.jdom.Document;
 import org.jdom.Element;
-import org.jdom.input.SAXBuilder;
 import painter.uml.UMLPainterFactory;
 
-import java.io.File;
 import java.util.List;
 
 public class UMLParser extends XMLParser {
@@ -18,21 +16,17 @@ public class UMLParser extends XMLParser {
     }
 
     @Override
-    public UMLDiagram parse(File file) throws MyXMLParserException {
+    public UMLDiagram parse(Document doc) throws MyXMLParserException {
         try {
-            UMLPainterFactory painterFactory = new UMLPainterFactory();
-            SAXBuilder saxBuilder = new SAXBuilder();
-            Document doc = saxBuilder.build(file);
-
             Element rootElement = doc.getRootElement();
             UMLDiagram diagram = new UMLDiagram(rootElement.getAttributeValue("name"));
 
-            List<Element> classElements = rootElement.getChild("classes").getChildren("class");
+            List<Element> classElements = rootElement.getChildren("class");
             for (Element c : classElements) {
                 diagram.addClass(this.parseClass(c));
             }
 
-            List<Element> relationshipElements = rootElement.getChild("relationships").getChildren("relationship");
+            List<Element> relationshipElements = rootElement.getChildren("relationship");
             for (Element r : relationshipElements) {
                 diagram.addRelationship(this.parseRelationship(r, diagram));
             }
@@ -51,11 +45,11 @@ public class UMLParser extends XMLParser {
         int y = Integer.parseInt(element.getAttributeValue("y"));
         umlClass.setPosition(x, y);
 
-        List<Element> attributeElements = element.getChild("attributes").getChildren("attribute");
-        attributeElements.forEach(el -> umlClass.addAttribute(new UMLAttribute(el.getValue())));
+        List<Element> attributeElements = element.getChildren("attribute");
+        attributeElements.forEach(el -> umlClass.addAttribute(new UMLAttribute(el.getAttributeValue("id"), el.getValue())));
 
-        List<Element> operationElements = element.getChild("operations").getChildren("operation");
-        operationElements.forEach(el -> umlClass.addOperation(new UMLOperation(el.getValue())));
+        List<Element> operationElements = element.getChildren("operation");
+        operationElements.forEach(el -> umlClass.addOperation(new UMLOperation(el.getAttributeValue("id"), el.getValue())));
 
         painterFactory.createPainter(umlClass);
         return umlClass;
@@ -63,8 +57,8 @@ public class UMLParser extends XMLParser {
 
     private UMLRelationship parseRelationship(Element element, UMLDiagram diagram) throws MyXMLParserException {
         UMLRelationship relationship;
-        String srcId = element.getChild("source").getValue();
-        String descId = element.getChild("destination").getValue();
+        String srcId = element.getAttributeValue("source");
+        String descId = element.getAttributeValue("destination");
         UMLClass src = null;
         UMLClass desc = null;
         for (UMLClass c : diagram.getUmlClasses()) {
@@ -93,7 +87,7 @@ public class UMLParser extends XMLParser {
             default:
                 throw new MyXMLParserException("relationship type not found");
         }
-
+        relationship.setId(element.getAttributeValue("id"));
         painterFactory.createPainter(relationship);
         return relationship;
     }

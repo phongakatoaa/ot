@@ -130,14 +130,16 @@ public class MyCanvasPopupMenu extends JPopupMenu {
     }
 
     public void onClickAddAttribute(UMLClass umlClass) {
-        umlClass.addAttribute(new UMLAttribute(""));
+        UMLAttribute attribute = new UMLAttribute("new attribute");
+        umlClass.addAttribute(attribute);
         ((UMLClassPainter) umlClass.getPainter()).revalidateProperties();
         canvas.bindDiagram();
         canvas.repaint();
     }
 
     public void onClickAddOperation(UMLClass umlClass) {
-        umlClass.addOperation(new UMLOperation(""));
+        UMLOperation umlOperation = new UMLOperation("new operation");
+        umlClass.addOperation(umlOperation);
         ((UMLClassPainter) umlClass.getPainter()).revalidateProperties();
         canvas.bindDiagram();
         canvas.repaint();

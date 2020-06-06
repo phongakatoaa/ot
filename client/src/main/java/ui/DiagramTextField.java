@@ -81,7 +81,7 @@ public class DiagramTextField extends JTextField {
             this.select(0, 0);
             String newValue = this.getText();
             if (!newValue.equals(this.element.getValue())) {
-                System.out.println("new value: " + newValue);
+                //System.out.println("new value: " + newValue);
                 this.element.setValue(newValue);
             }
         }

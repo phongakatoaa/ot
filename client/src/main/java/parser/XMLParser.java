@@ -1,9 +1,8 @@
 package parser;
 
 import model.uml.UMLDiagram;
-
-import java.io.File;
+import org.jdom.Document;
 
 public abstract class XMLParser {
-    public abstract UMLDiagram parse(File file) throws MyXMLParserException;
+    public abstract UMLDiagram parse(Document document) throws MyXMLParserException;
 }
