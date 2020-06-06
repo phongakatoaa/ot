@@ -1,35 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <uml name="example_db">
-    <classes>
-        <class name="Person" x="100" y="100" id="class#1">
-            <attributes>
-                <attribute>name</attribute>
-                <attribute>age</attribute>
-            </attributes>
-            <operations>
-                <operation>setName()</operation>
-                <operation>getName()</operation>
-                <operation>setAge()</operation>
-                <operation>getAge()</operation>
-            </operations>
-        </class>
-        <class name="Car" x="200" y="200" id="class#2">
-            <attributes>
-                <attribute>brand</attribute>
-                <attribute>model</attribute>
-            </attributes>
-            <operations>
-                <operation>setBrand()</operation>
-                <operation>getBrand()</operation>
-                <operation>getModel()</operation>
-                <operation>setModel()</operation>
-            </operations>
-        </class>
-    </classes>
-    <relationships>
-        <relationship type="realization" id="">
-            <source>class#1</source>
-            <destination>class#2</destination>
-        </relationship>
-    </relationships>
+    <class name="Person" x="100" y="100" id="c_1">
+        <attribute id="a_1">name</attribute>
+        <attribute id="a_2">age</attribute>
+        <operation id="o_1">setName()</operation>
+        <operation id="o_2">getName()</operation>
+        <operation id="o_3">setAge()</operation>
+        <operation id="o_4">getAge()</operation>
+    </class>
+    <class name="Car" x="200" y="200" id="c_2">
+        <attribute id="a_3">brand</attribute>
+        <attribute id="a_4">com.uet.model</attribute>
+        <operation id="o_5">setBrand()</operation>
+        <operation id="o_6">getBrand()</operation>
+        <operation id="o_7">getModel()</operation>
+        <operation id="o_8">setModel()</operation>
+    </class>
+    <relationship type="realization" id="r_1" source="c_1" destination="c_2"></relationship>
 </uml>
