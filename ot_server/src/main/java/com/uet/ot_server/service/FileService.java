@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.List;
 
 @Service
 public interface FileService {
@@ -25,4 +26,8 @@ public interface FileService {
     Resource loadFileAsResource(String fileName);
 
     boolean deleteDirectory(String dir);
+
+    OTFile getById(String id);
+
+    List<OTFile> getAllFiles();
 }

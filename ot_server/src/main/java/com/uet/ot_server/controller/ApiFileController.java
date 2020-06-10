@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
 @RestController
@@ -24,19 +25,25 @@ public class ApiFileController {
     private FileService fileService;
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public ResponseEntity<Object> uploadRepoFile(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<Object> uploadFile(@RequestParam("file") MultipartFile file) {
         try {
             OTFile otFile = fileService.storeFile(file);
-            String downloadPath = "/api/files/" + otFile.getName();
+            String downloadPath = "/api/files/" + otFile.get_id();
             return ResponseEntity.status(HttpStatus.OK).body(new ChannelSetting(otFile.get_id(), downloadPath));
         } catch (BusinessServiceException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
-    @RequestMapping(value = "/{filename}", method = RequestMethod.GET)
-    private ResponseEntity<Resource> getResourceResponseEntity(HttpServletRequest request, @PathVariable String filename) {
-        Resource resource = fileService.loadFileAsResource(filename);
+    @RequestMapping(value = "/", method = RequestMethod.POST)
+    public ResponseEntity<List<OTFile>> getFiles() {
+        return ResponseEntity.status(HttpStatus.OK).body(fileService.getAllFiles());
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    private ResponseEntity<Resource> getResourceResponseEntity(HttpServletRequest request, @PathVariable String id) {
+        OTFile otFile = fileService.getById(id);
+        Resource resource = fileService.loadFileAsResource(otFile.getFileName());
         String contentType = null;
         String fileName = Objects.requireNonNull(resource.getFilename());
         try {

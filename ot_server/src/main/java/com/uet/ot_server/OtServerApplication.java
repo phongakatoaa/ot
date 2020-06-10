@@ -8,5 +8,4 @@ public class OtServerApplication {
     public static void main(String[] args) {
         SpringApplication.run(OtServerApplication.class, args);
     }
-
 }

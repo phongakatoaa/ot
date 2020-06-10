@@ -20,6 +20,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -86,7 +87,7 @@ public class FileServiceImpl implements FileService {
             assert savePath != null;
             Path targetLocation = savePath.resolve(originalFileName);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-            otFile.setName(originalFileName);
+            otFile.setFileName(originalFileName);
             otFile.setInEdit(false);
             return otFileRepository.save(otFile);
         } catch (IOException ex) {
@@ -115,6 +116,16 @@ public class FileServiceImpl implements FileService {
     public boolean deleteDirectory(String dir) {
         Path path = Paths.get(dir).toAbsolutePath();
         return deleteDirectory(new File(path.toString()));
+    }
+
+    @Override
+    public OTFile getById(String id) {
+        return otFileRepository.findBy_id(id);
+    }
+
+    @Override
+    public List<OTFile> getAllFiles() {
+        return otFileRepository.findAll();
     }
 
     private boolean deleteDirectory(File dir) {

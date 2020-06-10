@@ -5,7 +5,7 @@ import org.springframework.data.annotation.Id;
 public class OTFile {
     @Id
     private String _id;
-    private String name;
+    private String fileName;
     private String path;
     private boolean inEdit;
 
@@ -17,12 +17,12 @@ public class OTFile {
         this._id = _id;
     }
 
-    public String getName() {
-        return name;
+    public String getFileName() {
+        return fileName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
     public String getPath() {
