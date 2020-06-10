@@ -17,15 +17,11 @@ public interface FileService {
 
     boolean editFileName(String saveLocation, String oldFileName, String newFileName);
 
-    void moveFile(String filename, String oldPath, String newPath) throws BusinessServiceException, IOException;
-
     boolean deleteFile(String filePath) throws IOException;
 
     OTFile storeFile(MultipartFile file) throws FileStorageException, BusinessServiceException;
 
     Resource loadFileAsResource(String fileName);
-
-    boolean deleteDirectory(String dir);
 
     OTFile getById(String id);
 

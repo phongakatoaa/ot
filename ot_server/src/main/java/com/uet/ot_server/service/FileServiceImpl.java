@@ -2,7 +2,6 @@ package com.uet.ot_server.service;
 
 import com.uet.ot_server.database.OTFileRepository;
 import com.uet.ot_server.model.OTFile;
-import com.uet.ot_server.service.exceptions.BusinessServiceException;
 import com.uet.ot_server.service.exceptions.CustomFileNotFoundException;
 import com.uet.ot_server.service.exceptions.FileStorageException;
 import org.apache.commons.io.FileUtils;
@@ -44,21 +43,6 @@ public class FileServiceImpl implements FileService {
     public boolean editFileName(String saveLocation, String oldFileName, String newFileName) {
         File file = new File(saveLocation + oldFileName);
         return file.renameTo(new File(saveLocation + newFileName));
-    }
-
-    @Override
-    public void moveFile(String filename, String oldPath, String newPath) throws BusinessServiceException {
-        File file = new File(oldPath + filename);
-        if(!file.exists()) throw new BusinessServiceException("File not found " + oldPath + filename);
-        File saveLocation = new File(newPath);
-        if (!saveLocation.exists()) {
-            if (!saveLocation.mkdir()) {
-                throw new BusinessServiceException("Unable to createInvitation path " + newPath);
-            }
-        }
-        if (!file.renameTo(new File(newPath + filename))) {
-            throw new BusinessServiceException("unable to move file " + filename);
-        }
     }
 
     @Override
@@ -110,12 +94,6 @@ public class FileServiceImpl implements FileService {
         } catch (MalformedURLException ex) {
             throw new CustomFileNotFoundException("File not found " + fileName, ex);
         }
-    }
-
-    @Override
-    public boolean deleteDirectory(String dir) {
-        Path path = Paths.get(dir).toAbsolutePath();
-        return deleteDirectory(new File(path.toString()));
     }
 
     @Override
