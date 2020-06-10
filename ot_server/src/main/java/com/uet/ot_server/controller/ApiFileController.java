@@ -24,7 +24,7 @@ public class ApiFileController {
     @Autowired
     private FileService fileService;
 
-    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Object> uploadFile(@RequestParam("file") MultipartFile file) {
         try {
             OTFile otFile = fileService.storeFile(file);
@@ -35,7 +35,7 @@ public class ApiFileController {
         }
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<OTFile>> getFiles() {
         return ResponseEntity.status(HttpStatus.OK).body(fileService.getAllFiles());
     }
@@ -55,6 +55,7 @@ public class ApiFileController {
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(contentType))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
+                .header("fileName", fileName)
                 .body(resource);
     }
 }

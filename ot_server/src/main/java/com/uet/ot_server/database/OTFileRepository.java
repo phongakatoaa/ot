@@ -6,5 +6,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 public interface OTFileRepository extends MongoRepository<OTFile, String> {
     OTFile findBy_id(String id);
 
-    OTFile findByName(String name);
+    OTFile findByFileName(String fileName);
 }
