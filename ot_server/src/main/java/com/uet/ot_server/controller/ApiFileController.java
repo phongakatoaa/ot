@@ -1,7 +1,7 @@
 package com.uet.ot_server.controller;
 
 import com.uet.ot_server.model.OTFile;
-import com.uet.ot_server.model.ResponseMessage;
+import com.uet.ot_server.model.ChannelSetting;
 import com.uet.ot_server.service.FileService;
 import com.uet.ot_server.service.exceptions.BusinessServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
 @RestController
@@ -23,20 +24,26 @@ public class ApiFileController {
     @Autowired
     private FileService fileService;
 
-    @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public ResponseEntity<Object> uploadRepoFile(@RequestParam("file") MultipartFile file) {
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<Object> uploadFile(@RequestParam("file") MultipartFile file) {
         try {
             OTFile otFile = fileService.storeFile(file);
-            String downloadPath = "/api/files/" + otFile.getName();
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(otFile.get_id(), downloadPath));
+            String downloadPath = "/api/files/" + otFile.get_id();
+            return ResponseEntity.status(HttpStatus.OK).body(new ChannelSetting(otFile.get_id(), downloadPath));
         } catch (BusinessServiceException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
-    @RequestMapping(value = "/{filename}", method = RequestMethod.GET)
-    private ResponseEntity<Resource> getResourceResponseEntity(HttpServletRequest request, @PathVariable String filename) {
-        Resource resource = fileService.loadFileAsResource(filename);
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<List<OTFile>> getFiles() {
+        return ResponseEntity.status(HttpStatus.OK).body(fileService.getAllFiles());
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    private ResponseEntity<Resource> getResourceResponseEntity(HttpServletRequest request, @PathVariable String id) {
+        OTFile otFile = fileService.getById(id);
+        Resource resource = fileService.loadFileAsResource(otFile.getFileName());
         String contentType = null;
         String fileName = Objects.requireNonNull(resource.getFilename());
         try {
@@ -48,6 +55,7 @@ public class ApiFileController {
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(contentType))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
+                .header("fileName", fileName)
                 .body(resource);
     }
 }

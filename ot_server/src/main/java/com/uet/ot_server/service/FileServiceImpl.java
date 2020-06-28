@@ -2,7 +2,6 @@ package com.uet.ot_server.service;
 
 import com.uet.ot_server.database.OTFileRepository;
 import com.uet.ot_server.model.OTFile;
-import com.uet.ot_server.service.exceptions.BusinessServiceException;
 import com.uet.ot_server.service.exceptions.CustomFileNotFoundException;
 import com.uet.ot_server.service.exceptions.FileStorageException;
 import org.apache.commons.io.FileUtils;
@@ -20,6 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -43,21 +43,6 @@ public class FileServiceImpl implements FileService {
     public boolean editFileName(String saveLocation, String oldFileName, String newFileName) {
         File file = new File(saveLocation + oldFileName);
         return file.renameTo(new File(saveLocation + newFileName));
-    }
-
-    @Override
-    public void moveFile(String filename, String oldPath, String newPath) throws BusinessServiceException {
-        File file = new File(oldPath + filename);
-        if(!file.exists()) throw new BusinessServiceException("File not found " + oldPath + filename);
-        File saveLocation = new File(newPath);
-        if (!saveLocation.exists()) {
-            if (!saveLocation.mkdir()) {
-                throw new BusinessServiceException("Unable to createInvitation path " + newPath);
-            }
-        }
-        if (!file.renameTo(new File(newPath + filename))) {
-            throw new BusinessServiceException("unable to move file " + filename);
-        }
     }
 
     @Override
@@ -86,7 +71,7 @@ public class FileServiceImpl implements FileService {
             assert savePath != null;
             Path targetLocation = savePath.resolve(originalFileName);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-            otFile.setName(originalFileName);
+            otFile.setFileName(originalFileName);
             otFile.setInEdit(false);
             return otFileRepository.save(otFile);
         } catch (IOException ex) {
@@ -112,9 +97,13 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public boolean deleteDirectory(String dir) {
-        Path path = Paths.get(dir).toAbsolutePath();
-        return deleteDirectory(new File(path.toString()));
+    public OTFile getById(String id) {
+        return otFileRepository.findBy_id(id);
+    }
+
+    @Override
+    public List<OTFile> getAllFiles() {
+        return otFileRepository.findAll();
     }
 
     private boolean deleteDirectory(File dir) {

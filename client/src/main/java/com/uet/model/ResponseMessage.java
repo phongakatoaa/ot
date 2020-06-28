@@ -1,4 +1,4 @@
-package com.uet.ot_server.model;
+package com.uet.model;
 
 public class ResponseMessage {
     private String message;
