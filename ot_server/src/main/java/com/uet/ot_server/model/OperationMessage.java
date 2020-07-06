@@ -4,11 +4,13 @@ public class OperationMessage {
     private String type;
     private String operationJson;
     private String documentStateString;
+    private int delay;
 
-    public OperationMessage(String type, String operationJson, String documentStateString) {
+    public OperationMessage(String type, String operationJson, String documentStateString, int delay) {
         this.type = type;
         this.operationJson = operationJson;
         this.documentStateString = documentStateString;
+        this.delay = delay;
     }
 
     public String getType() {
@@ -33,5 +35,13 @@ public class OperationMessage {
 
     public void setDocumentStateString(String documentStateString) {
         this.documentStateString = documentStateString;
+    }
+
+    public int getDelay() {
+        return delay;
+    }
+
+    public void setDelay(int delay) {
+        this.delay = delay;
     }
 }

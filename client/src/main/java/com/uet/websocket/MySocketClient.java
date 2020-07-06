@@ -1,6 +1,7 @@
 package com.uet.websocket;
 
 import com.google.gson.Gson;
+import com.uet.config.UserConfig;
 import com.uet.ot.operation.Operation;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.simp.stomp.StompSession;
@@ -49,7 +50,7 @@ public class MySocketClient {
         for (Operation o : documentState) {
             dsString.append(gson.toJson(o)).append("//");
         }
-        stompSession.send(operationRoute, new OperationMessage(type, gson.toJson(operation), dsString.toString()));
+        stompSession.send(operationRoute, new OperationMessage(type, gson.toJson(operation), dsString.toString(), UserConfig.getInstance().getDelay()));
     }
 
     public StompSessionHandler getStompSessionHandler() {

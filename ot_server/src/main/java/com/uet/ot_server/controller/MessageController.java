@@ -11,6 +11,8 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Controller;
 
+import java.util.concurrent.TimeUnit;
+
 import static java.lang.String.format;
 
 @Controller
@@ -30,8 +32,17 @@ public class MessageController {
     @MessageMapping("/operation/{id}")
     public void sendOperation(@DestinationVariable String id, @Payload OperationMessage operationMessage) {
 //        Operation operation;
-        System.out.println(operationMessage.getOperationJson());
-        System.out.println(operationMessage.getDocumentStateString());
+        System.out.println("operation: " + operationMessage.getOperationJson());
+        System.out.println("documentState: " + operationMessage.getDocumentStateString());
+        if (operationMessage.getDelay() > 0) {
+            System.out.println("delaying for: " + operationMessage.getDelay() + "ms");
+            try {
+                TimeUnit.MILLISECONDS.sleep(operationMessage.getDelay());
+            } catch (Exception ignored) {
+
+            }
+        }
+        System.out.println("============================================================");
 //        switch (operationMessage.getType()) {
 //            case "insert":
 //                operation = gson.fromJson(operationMessage.getOperationJson(), Insert.class);
