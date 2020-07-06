@@ -13,6 +13,7 @@ import com.uet.websocket.MySocketClient;
 import org.jdom2.Document;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class UMLDocumentControl {
     private static final UMLDocumentControl instance = new UMLDocumentControl();
@@ -71,9 +72,12 @@ public class UMLDocumentControl {
         this.myCanvas = myCanvas;
     }
 
-    public void applyLocal(Operation operation) {
+    public void applyLocal(Operation operation) throws InterruptedException {
         operation.apply(document, finder);
         xmlViewer.parseXML(document);
+        if(UserConfig.getInstance().getDelay() > 0) {
+            TimeUnit.MILLISECONDS.sleep(UserConfig.getInstance().getDelay());
+        }
         socketClient.sendOperation(operation, documentState);
         documentState.add(operation);
         operationLogger.appendOperation(operation);

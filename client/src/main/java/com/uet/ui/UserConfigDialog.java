@@ -7,6 +7,7 @@ public class UserConfigDialog extends JPanel {
     private JTextField tfUserId;
     private JTextField tfChannelId;
     private JTextField tfHost;
+    private JTextField tfDelay;
 
     public UserConfigDialog() {
         super();
@@ -15,9 +16,14 @@ public class UserConfigDialog extends JPanel {
         JLabel labelUserId = new JLabel("User ID");
         JLabel labelChannelId = new JLabel("Channel ID");
         JLabel labelHost = new JLabel("Host");
+        JLabel labelDelay = new JLabel("Delay milliseconds");
         tfUserId = new JTextField();
         tfChannelId = new JTextField();
+        tfChannelId.setText("1");
         tfHost = new JTextField();
+        tfHost.setText("localhost");
+        tfDelay = new JTextField();
+        tfDelay.setText("0");
 
         this.add(labelUserId);
         this.add(tfUserId);
@@ -25,6 +31,8 @@ public class UserConfigDialog extends JPanel {
         this.add(tfChannelId);
         this.add(labelHost);
         this.add(tfHost);
+        this.add(labelDelay);
+        this.add(tfDelay);
     }
 
     public String getUserId() {
@@ -37,5 +45,9 @@ public class UserConfigDialog extends JPanel {
 
     public String getHost() {
         return tfHost.getText();
+    }
+
+    public int getDelay() {
+        return Integer.parseInt(tfDelay.getText());
     }
 }

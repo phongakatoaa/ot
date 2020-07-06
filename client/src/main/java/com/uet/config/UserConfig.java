@@ -4,9 +4,12 @@ public class UserConfig {
     private String userId;
     private String channelId;
     private String host;
+    private int delay;
+
     private static final UserConfig instance = new UserConfig();
 
     private UserConfig() {
+        delay = 0;
     }
 
     public String getUserId() {
@@ -35,5 +38,13 @@ public class UserConfig {
 
     public static UserConfig getInstance() {
         return instance;
+    }
+
+    public int getDelay() {
+        return delay;
+    }
+
+    public void setDelay(int delay) {
+        this.delay = delay;
     }
 }

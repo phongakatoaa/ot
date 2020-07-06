@@ -31,6 +31,7 @@ public class UMLEditorApplication {
         userConfig.setUserId(userConfigDialog.getUserId());
         userConfig.setChannelId(userConfigDialog.getChannelId());
         userConfig.setHost(userConfigDialog.getHost());
+        userConfig.setDelay(userConfigDialog.getDelay());
 
         CanvasOperationMapper operationMapper = CanvasOperationMapper.getInstance();
         operationMapper.setUserId(userConfig.getUserId());
