@@ -11,7 +11,7 @@ public class UserConfigDialog extends JPanel {
 
     public UserConfigDialog() {
         super();
-        this.setLayout(new GridLayout(3, 3));
+        this.setLayout(new GridLayout(4, 4));
 
         JLabel labelUserId = new JLabel("User ID");
         JLabel labelChannelId = new JLabel("Channel ID");

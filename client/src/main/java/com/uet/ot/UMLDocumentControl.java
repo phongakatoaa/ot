@@ -72,11 +72,15 @@ public class UMLDocumentControl {
         this.myCanvas = myCanvas;
     }
 
-    public void applyLocal(Operation operation) throws InterruptedException {
+    public void applyLocal(Operation operation) {
         operation.apply(document, finder);
         xmlViewer.parseXML(document);
-        if(UserConfig.getInstance().getDelay() > 0) {
-            TimeUnit.MILLISECONDS.sleep(UserConfig.getInstance().getDelay());
+        if (UserConfig.getInstance().getDelay() > 0) {
+            try {
+                TimeUnit.MILLISECONDS.sleep(UserConfig.getInstance().getDelay());
+            } catch (Exception ignored) {
+
+            }
         }
         socketClient.sendOperation(operation, documentState);
         documentState.add(operation);
