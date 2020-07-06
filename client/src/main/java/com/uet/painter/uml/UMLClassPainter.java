@@ -33,7 +33,7 @@ public class UMLClassPainter extends Painter {
         final ArrayList<DiagramTextField> textFields = new ArrayList<>();
         final int classX = umlClass.getX();
         final int classY = umlClass.getY();
-        final int classWidth = 200;
+        final int classWidth = 400;
         final int rowHeight = 30;
         final int rowNum = umlClass.getAttributes().size() + umlClass.getOperations().size() + 2;
         final int classHeight = rowNum * rowHeight;

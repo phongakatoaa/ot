@@ -1,5 +1,6 @@
 package com.uet.ui;
 
+import com.uet.model.uml.UMLClass;
 import com.uet.model.uml.UMLDiagram;
 import com.uet.painter.Painter;
 import com.uet.painter.uml.UMLClassPainter;
@@ -102,6 +103,9 @@ public class MyCanvas extends JPanel implements MouseMotionListener, MouseListen
 
     @Override
     public void mousePressed(MouseEvent e) {
+        if (SwingUtilities.isRightMouseButton(e)) {
+            return;
+        }
         this.mouseX = e.getX();
         this.mouseY = e.getY();
         for (Painter painter : this.painters) {
@@ -116,7 +120,13 @@ public class MyCanvas extends JPanel implements MouseMotionListener, MouseListen
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        if (this.focusedPainter != null) {
+        if (this.focusedPainter != null && this.focusedPainter instanceof UMLClassPainter) {
+            UMLClass umlClass = ((UMLClassPainter) focusedPainter).getUmlClass();
+            umlClass.setPosition(umlClass.getX() + (e.getX() - mouseX), umlClass.getY() + (e.getY() - mouseY), true);
+            this.mouseX = e.getX();
+            this.mouseY = e.getY();
+            this.repaint();
+
             focusedPainter.setFocused(false);
             focusedPainter = null;
         }
@@ -134,8 +144,9 @@ public class MyCanvas extends JPanel implements MouseMotionListener, MouseListen
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        if (this.focusedPainter != null) {
-            translateControl.translate(mouseX, mouseY, e.getX(), e.getY(), focusedPainter);
+        if (this.focusedPainter != null && this.focusedPainter instanceof UMLClassPainter) {
+            UMLClass umlClass = ((UMLClassPainter) focusedPainter).getUmlClass();
+            umlClass.setPosition(umlClass.getX() + (e.getX() - mouseX), umlClass.getY() + (e.getY() - mouseY), false);
             this.mouseX = e.getX();
             this.mouseY = e.getY();
             this.repaint();

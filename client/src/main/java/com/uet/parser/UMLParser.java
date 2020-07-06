@@ -43,7 +43,7 @@ public class UMLParser extends XMLParser {
         umlClass.setId(element.getAttributeValue("id"));
         int x = Integer.parseInt(element.getAttributeValue("x"));
         int y = Integer.parseInt(element.getAttributeValue("y"));
-        umlClass.setPosition(x, y);
+        umlClass.setPosition(x, y, false);
 
         List<Element> attributeElements = element.getChildren("attribute");
         attributeElements.forEach(el -> umlClass.addAttribute(new UMLAttribute(el.getAttributeValue("id"), el.getValue())));

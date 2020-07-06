@@ -2,7 +2,7 @@ package com.uet.model.uml;
 
 import com.uet.model.MyEditableElement;
 import com.uet.ot.UMLDocumentControl;
-import com.uet.ot.helper.CanvasEventToOperationMapper;
+import com.uet.ot.helper.CanvasOperationMapper;
 import com.uet.ot.operation.Operation;
 
 public class UMLAttribute extends MyEditableElement {
@@ -23,7 +23,7 @@ public class UMLAttribute extends MyEditableElement {
     public void setValue(String value) {
         super.setValue(value);
 
-        Operation operation = CanvasEventToOperationMapper.getInstance().updateAttributeEventOperation(this);
-        UMLDocumentControl.getInstance().applyOperation(operation);
+        Operation operation = CanvasOperationMapper.getInstance().updateAttributeEventOperation(this);
+        UMLDocumentControl.getInstance().applyLocal(operation);
     }
 }

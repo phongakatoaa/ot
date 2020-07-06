@@ -8,15 +8,15 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class DiagramTextField extends JTextField {
-
     private final MyEditableElement element;
     private final DiagramTextFieldPopupMenu popupMenu;
+    private boolean focused;
 
     public DiagramTextField(MyEditableElement element, UMLClass umlClass) {
         super();
         this.element = element;
         this.popupMenu = new DiagramTextFieldPopupMenu(element, umlClass);
-
+        this.focused = false;
         this.setText(element.getValue());
         bind();
     }
@@ -31,11 +31,13 @@ public class DiagramTextField extends JTextField {
         this.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
+                focused = false;
                 updateLayout(false);
             }
 
             @Override
             public void focusGained(FocusEvent e) {
+                focused = true;
                 updateLayout(true);
             }
         });
@@ -54,7 +56,9 @@ public class DiagramTextField extends JTextField {
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                setForeground(Color.red);
+                if (!focused) {
+                    setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.red));
+                }
                 setCursor(new Cursor(Cursor.TEXT_CURSOR));
             }
 
@@ -70,7 +74,9 @@ public class DiagramTextField extends JTextField {
 
             @Override
             public void mouseExited(MouseEvent e) {
-                setForeground(Color.black);
+                if (!focused) {
+                    setBorder(null);
+                }
             }
         });
     }

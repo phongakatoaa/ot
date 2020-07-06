@@ -77,6 +77,7 @@ public class MyMenuBar extends JMenuBar {
 
                 UMLParser parser = new UMLParser();
                 UMLDiagram diagram = parser.parse(document);
+                //UMLDocumentControl.getInstance().setUmlDiagram(diagram);
 
                 frame.getMyCanvas().setDiagram(diagram);
                 frame.getXmlViewer().parseXML(file);

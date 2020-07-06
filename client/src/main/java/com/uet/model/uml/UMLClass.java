@@ -2,7 +2,7 @@ package com.uet.model.uml;
 
 import com.uet.model.MyElement;
 import com.uet.ot.UMLDocumentControl;
-import com.uet.ot.helper.CanvasEventToOperationMapper;
+import com.uet.ot.helper.CanvasOperationMapper;
 import com.uet.ot.operation.Operation;
 
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ public class UMLClass extends MyElement {
     private int y;
 
     public UMLClass(String name) {
-        this.name = new UMLClassName(name);
+        this.name = new UMLClassName(name, this);
         this.attributes = new ArrayList<>();
         this.operations = new ArrayList<>();
         this.x = 0;
@@ -45,8 +45,8 @@ public class UMLClass extends MyElement {
         this.name.setValue(name);
 
         if (this.id != null) {
-            Operation operation = CanvasEventToOperationMapper.getInstance().updateClassEventOperation(this);
-            UMLDocumentControl.getInstance().applyOperation(operation);
+            Operation operation = CanvasOperationMapper.getInstance().updateClassEventOperation(this);
+            UMLDocumentControl.getInstance().applyLocal(operation);
         }
     }
 
@@ -66,43 +66,44 @@ public class UMLClass extends MyElement {
         return y;
     }
 
-    public void setPosition(int x, int y) {
+    public void setPosition(int x, int y, boolean logOperation) {
+        //boolean shifted = (x != this.x || y != this.y);
         this.x = x;
         this.y = y;
 
-        if (this.id != null) {
-            Operation operation = CanvasEventToOperationMapper.getInstance().updateClassEventOperation(this);
-            UMLDocumentControl.getInstance().applyOperation(operation);
+        if (this.id != null && logOperation) {
+            Operation operation = CanvasOperationMapper.getInstance().updateClassEventOperation(this);
+            UMLDocumentControl.getInstance().applyLocal(operation);
         }
     }
 
     public void addAttribute(UMLAttribute attribute) {
         this.attributes.add(attribute);
         if (attribute.getId() == null) {
-            Operation operation = CanvasEventToOperationMapper.getInstance().addAttributeEventOperation(attribute, this);
-            UMLDocumentControl.getInstance().applyOperation(operation);
+            Operation operation = CanvasOperationMapper.getInstance().addAttributeEventOperation(attribute, this);
+            UMLDocumentControl.getInstance().applyLocal(operation);
         }
     }
 
     public void removeAttribute(UMLAttribute attribute) {
         this.attributes.remove(attribute);
 
-        Operation operation = CanvasEventToOperationMapper.getInstance().deleteElementEventOperation(attribute);
-        UMLDocumentControl.getInstance().applyOperation(operation);
+        Operation operation = CanvasOperationMapper.getInstance().deleteElementEventOperation(attribute);
+        UMLDocumentControl.getInstance().applyLocal(operation);
     }
 
     public void addOperation(UMLOperation umlOperation) {
         this.operations.add(umlOperation);
         if (umlOperation.getId() == null) {
-            Operation operation = CanvasEventToOperationMapper.getInstance().addOperationEventOperation(umlOperation, this);
-            UMLDocumentControl.getInstance().applyOperation(operation);
+            Operation operation = CanvasOperationMapper.getInstance().addOperationEventOperation(umlOperation, this);
+            UMLDocumentControl.getInstance().applyLocal(operation);
         }
     }
 
     public void removeOperation(UMLOperation umlOperation) {
         this.operations.remove(umlOperation);
 
-        Operation operation = CanvasEventToOperationMapper.getInstance().deleteElementEventOperation(umlOperation);
-        UMLDocumentControl.getInstance().applyOperation(operation);
+        Operation operation = CanvasOperationMapper.getInstance().deleteElementEventOperation(umlOperation);
+        UMLDocumentControl.getInstance().applyLocal(operation);
     }
 }

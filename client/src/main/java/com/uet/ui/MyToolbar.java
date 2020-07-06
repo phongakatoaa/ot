@@ -79,7 +79,7 @@ public class MyToolbar extends JToolBar {
                     errorMessage = "Class name cannot be empty";
                 } else {
                     UMLClass umlClass = new UMLClass(value);
-                    umlClass.setPosition(50, 50);
+                    umlClass.setPosition(50, 50, false);
                     UMLPainterFactory painterFactory = new UMLPainterFactory();
                     UMLClassPainter painter = (UMLClassPainter) painterFactory.createPainter(umlClass);
                     canvas.getDiagram().addClass(umlClass);

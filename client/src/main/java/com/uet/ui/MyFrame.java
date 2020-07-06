@@ -1,5 +1,7 @@
 package com.uet.ui;
 
+import com.uet.ot.helper.CanvasOperationMapper;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -10,7 +12,8 @@ public class MyFrame extends JFrame {
     private final MyToolbar toolbar;
     private final XMLViewer xmlViewer;
     private final MyCanvas myCanvas;
-    private final Chat chat;
+    private final ChatWidget chatWidget;
+    private final OperationLogger operationLogger;
 
     public MyFrame() {
         super(APP_TITLE);
@@ -22,9 +25,11 @@ public class MyFrame extends JFrame {
         xmlViewer = new XMLViewer();
         myCanvas = new MyCanvas();
         toolbar = new MyToolbar(myCanvas);
-        chat = new Chat();
+        chatWidget = new ChatWidget();
+        operationLogger = new OperationLogger();
 
         JSplitPane splitPane = new JSplitPane();
+        JSplitPane splitPane1 = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 
         menuBar.setFrame(this);
         menuBar.setXmlViewer(xmlViewer);
@@ -32,10 +37,14 @@ public class MyFrame extends JFrame {
         splitPane.setRightComponent(new JScrollPane(myCanvas));
         splitPane.setResizeWeight(0.15);
 
+        splitPane1.setTopComponent(chatWidget);
+        splitPane1.setBottomComponent(operationLogger);
+        splitPane1.setResizeWeight(0.15);
+
         this.setJMenuBar(menuBar);
-        this.add(toolbar, BorderLayout.PAGE_START);
+        this.add(toolbar, BorderLayout.NORTH);
         this.add(splitPane, BorderLayout.CENTER);
-        this.add(chat, BorderLayout.LINE_END);
+        this.add(splitPane1, BorderLayout.EAST);
     }
 
     public MyToolbar getToolbar() {
@@ -50,7 +59,11 @@ public class MyFrame extends JFrame {
         return myCanvas;
     }
 
-    public Chat getChat() {
-        return chat;
+    public ChatWidget getChatWidget() {
+        return chatWidget;
+    }
+
+    public OperationLogger getOperationLogger() {
+        return operationLogger;
     }
 }

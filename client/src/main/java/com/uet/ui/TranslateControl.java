@@ -22,7 +22,7 @@ public class TranslateControl {
 
     private void translateUMLClass(int x1, int y1, int x2, int y2, UMLClassPainter painter) {
         UMLClass umlClass = painter.getUmlClass();
-        umlClass.setPosition(umlClass.getX() + (x2 - x1), umlClass.getY() + (y2 - y1));
+        umlClass.setPosition(umlClass.getX() + (x2 - x1), umlClass.getY() + (y2 - y1), false);
     }
 
     private void translateUMLRelationship(int x1, int y1, int x2, int y2, Painter painter) {

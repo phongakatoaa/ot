@@ -19,11 +19,5 @@ public class UMLAssociationPainter extends UMLRelationshipPainter {
             graphics2D.setStroke(Constants.THIN_STROKE);
         }
         super.paint(graphics2D);
-        graphics2D.setStroke(Constants.THIN_STROKE);
-        AffineTransform oldTransform = graphics2D.getTransform();
-        graphics2D.rotate(Math.toRadians(rotateDegree), x2, y2);
-        graphics2D.drawLine(x2, y2, x2 - 10, y2 - 20);
-        graphics2D.drawLine(x2, y2, x2 + 10, y2 - 20);
-        graphics2D.setTransform(oldTransform);
     }
 }

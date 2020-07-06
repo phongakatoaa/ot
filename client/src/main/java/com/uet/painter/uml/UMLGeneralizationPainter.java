@@ -13,14 +13,13 @@ public class UMLGeneralizationPainter extends UMLRelationshipPainter {
 
     @Override
     public void paint(Graphics2D graphics2D) {
-        if(isHovered()) {
+        System.out.println(isHovered());
+        if (isHovered()) {
             graphics2D.setStroke(Constants.THICK_STROKE);
         } else {
             graphics2D.setStroke(Constants.THIN_STROKE);
         }
         super.paint(graphics2D);
-        int[] xPts = {x2, x2 - 10, x2 + 10};
-        int[] yPts = {y2, y2 - 10, y2 - 10};
         graphics2D.setStroke(Constants.MEDIUM_STROKE);
         AffineTransform oldTransform = graphics2D.getTransform();
         Paint oldPaint = graphics2D.getPaint();
@@ -34,10 +33,5 @@ public class UMLGeneralizationPainter extends UMLRelationshipPainter {
         graphics2D.fill(polygon);
         graphics2D.setTransform(oldTransform);
         graphics2D.setPaint(oldPaint);
-    }
-
-    @Override
-    public boolean intersectMouse(int x, int y) {
-        return false;
     }
 }

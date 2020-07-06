@@ -24,6 +24,7 @@ public class XMLViewer extends JEditorPane {
 
     public void parseXML(Document document) {
         String output = new XMLOutputter().outputString(document);
+        //System.out.println(output);
         try {
             this.read(new StringReader(output), new XMLDocument());
         } catch (IOException e) {

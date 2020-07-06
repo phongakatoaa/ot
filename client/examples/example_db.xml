@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<uml name="example_db">
+<uml name="example">
     <class name="Person" x="100" y="100" id="c_1">
         <attribute id="a_1">name</attribute>
         <attribute id="a_2">age</attribute>
-        <operation id="o_1">setName()</operation>
-        <operation id="o_2">getName()</operation>
-        <operation id="o_3">setAge()</operation>
-        <operation id="o_4">getAge()</operation>
+        <operation id="o_1">setName(name)</operation>
+        <operation id="o_2">setAge(age)</operation>
     </class>
     <class name="Car" x="200" y="200" id="c_2">
-        <attribute id="a_3">brand</attribute>
-        <attribute id="a_4">com.uet.model</attribute>
-        <operation id="o_5">setBrand()</operation>
-        <operation id="o_6">getBrand()</operation>
-        <operation id="o_7">getModel()</operation>
-        <operation id="o_8">setModel()</operation>
+        <attribute id="a_3">owner</attribute>
+        <attribute id="a_4">brand</attribute>
+        <operation id="o_3">setBrand(brand)</operation>
+        <operation id="o_4">setOwner(owner)</operation>
     </class>
-    <relationship type="realization" id="r_1" source="c_1" destination="c_2"></relationship>
+    <relationship type="association" id="r_1" source="c_1" destination="c_2"></relationship>
 </uml>
