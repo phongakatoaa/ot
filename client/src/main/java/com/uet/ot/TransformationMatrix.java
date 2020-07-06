@@ -60,9 +60,11 @@ public class TransformationMatrix {
         if (o1.getNodeId().equals(o2.getNodeId())) {
             if (o1.getTimestamp().compareTo(o2.getTimestamp()) >= 0) {
                 return o1;
+            } else {
+                return null;
             }
         }
-        return null;
+        return o1;
     }
 
     public Operation transform(Update o1, Insert o2) {
