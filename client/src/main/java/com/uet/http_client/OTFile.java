@@ -1,9 +1,6 @@
-package com.uet.ot_server.model;
-
-import org.springframework.data.annotation.Id;
+package com.uet.http_client;
 
 public class OTFile {
-    @Id
     private String _id;
     private String diagramName;
     private String content;
@@ -41,3 +38,4 @@ public class OTFile {
         this.timestamp = timestamp;
     }
 }
+

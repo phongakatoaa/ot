@@ -40,7 +40,7 @@ public class TransformationMatrix {
                 && (o1.getName().equals("operation") || o1.getName().equals("attribute"))
                 && o1.getParentId().equals(o2.getParentId())) {
             if (o1.getTimestamp().compareTo(o2.getTimestamp()) >= 0) {
-                if (o1.getPosition() > o2.getPosition()) {
+                if (o1.getPosition() >= o2.getPosition()) {
                     return new Insert(o1.getUserId(), o1.getTimestamp(), o1.getName(), o1.getText(), o1.getKeyValuePairs(), o1.getPosition() + 1, o1.getParentId());
                 }
             }
